@@ -37,6 +37,17 @@ spring:
     hibernate:
       ddl-auto: validate
 
+  kafka:
+    bootstrap-servers:
+      - "localhost:29092"
+
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
+
 security:
   rsa:
     public-key: classpath:certs/public-key.pem
+
+kafka:
+  topics:
+    project-commands-topic: project-commands

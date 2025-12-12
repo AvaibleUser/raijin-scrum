@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import edu.raijin.commons.util.exception.BadRequestException;
 import edu.raijin.scrum.project.domain.model.Project;
 import edu.raijin.scrum.project.domain.port.messaging.CreatedProjectPublisherPort;
 import edu.raijin.scrum.project.domain.port.persistence.RegisterProjectPort;
@@ -20,11 +19,7 @@ public class CreateProjectService implements CreateProjectUseCase {
 
     @Override
     public UUID create(Project project) {
-        try {
-            project.checkValidRegistration();
-        } catch (IllegalArgumentException e) {
-            throw new BadRequestException(e.getMessage());
-        }
+        project.checkValidRegistration();
 
         UUID id = registerProject.create(project);
         project.updateId(id);

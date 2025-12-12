@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 import java.util.UUID;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.raijin.commons.util.annotation.Adapter;
 import edu.raijin.scrum.project.domain.model.Project;
 import edu.raijin.scrum.project.domain.usecase.CreateProjectUseCase;
+import edu.raijin.scrum.project.domain.usecase.FetchProjectUseCase;
+import edu.raijin.scrum.project.domain.usecase.FetchProjectsUseCase;
 import edu.raijin.scrum.project.domain.usecase.UpdateProjectUseCase;
 import edu.raijin.scrum.project.infrastructure.adapter.in.rest.dto.project.AddProjectDto;
 import edu.raijin.scrum.project.infrastructure.adapter.in.rest.dto.project.ProjectDto;
@@ -29,9 +32,24 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProjectController {
 
+    private final FetchProjectUseCase fetch;
+    private final FetchProjectsUseCase fetchAll;
     private final CreateProjectUseCase create;
     private final UpdateProjectUseCase update;
     private final ProjectDtoMapper mapper;
+
+    @GetMapping
+    public Iterable<ProjectDto> fetchAll() {
+        return fetchAll.fetchAll()
+                .stream()
+                .map(mapper::toDto)
+                .toList();
+    }
+
+    @GetMapping("/{id}")
+    public ProjectDto fetch(@PathVariable UUID id) {
+        return mapper.toDto(fetch.fetch(id));
+    }
 
     @PostMapping
     @ResponseStatus(CREATED)

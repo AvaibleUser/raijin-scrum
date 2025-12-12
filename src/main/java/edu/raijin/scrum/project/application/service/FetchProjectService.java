@@ -1,10 +1,11 @@
 package edu.raijin.scrum.project.application.service;
 
-import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import edu.raijin.commons.domain.model.Paged;
 import edu.raijin.commons.util.exception.ValueNotFoundException;
 import edu.raijin.scrum.project.domain.model.Project;
 import edu.raijin.scrum.project.domain.port.persistence.FindProjectPort;
@@ -25,7 +26,7 @@ public class FetchProjectService implements FetchProjectUseCase, FetchProjectsUs
     }
 
     @Override
-    public List<Project> fetchAll() {
-        return findProject.findAll();
+    public Paged<Project> fetchAll(Pageable pageable) {
+        return findProject.findAll(pageable);
     }
 }

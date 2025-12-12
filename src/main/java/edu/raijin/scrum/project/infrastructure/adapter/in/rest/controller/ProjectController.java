@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 import java.util.UUID;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.raijin.commons.domain.model.Paged;
 import edu.raijin.commons.infrastructure.adapter.rest.dto.scrum.ProjectDto;
 import edu.raijin.commons.util.annotation.Adapter;
 import edu.raijin.scrum.project.domain.model.Project;
@@ -45,11 +47,8 @@ public class ProjectController {
     private final ProjectDtoMapper mapper;
 
     @GetMapping
-    public Iterable<ProjectDto> fetchAll() {
-        return fetchAll.fetchAll()
-                .stream()
-                .map(mapper::toDto)
-                .toList();
+    public Paged<ProjectDto> fetchAll(Pageable pageable) {
+        return fetchAll.fetchAll(pageable).map(mapper::toDto);
     }
 
     @GetMapping("/{id}")

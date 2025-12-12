@@ -1,11 +1,13 @@
 package edu.raijin.scrum.project.infrastructure.adapter.out.persistence.impl;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import edu.raijin.commons.domain.model.Paged;
 import edu.raijin.commons.util.annotation.Adapter;
 import edu.raijin.scrum.project.domain.model.Project;
 import edu.raijin.scrum.project.domain.port.persistence.CloseProjectPort;
@@ -37,11 +39,9 @@ public class ProjectRepositoryAdapter implements FindProjectPort, RegisterProjec
     }
 
     @Override
-    public List<Project> findAll() {
-        return projectRepository.findAllByDeletedFalse()
-                .stream()
-                .map(mapper::toDomain)
-                .toList();
+    public Paged<Project> findAll(Pageable pageable) {
+        Page<Project> projects = projectRepository.findAllByDeletedFalse(pageable).map(mapper::toDomain);
+        return Paged.from(projects);
     }
 
     @Override

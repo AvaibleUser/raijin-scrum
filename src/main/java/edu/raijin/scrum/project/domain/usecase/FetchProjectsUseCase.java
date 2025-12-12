@@ -1,12 +1,13 @@
 package edu.raijin.scrum.project.domain.usecase;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
+import edu.raijin.commons.domain.model.Paged;
 import edu.raijin.commons.util.annotation.UseCase;
 import edu.raijin.scrum.project.domain.model.Project;
 
 @UseCase
 public interface FetchProjectsUseCase {
 
-    List<Project> fetchAll();
+    Paged<Project> fetchAll(Pageable pageable);
 }

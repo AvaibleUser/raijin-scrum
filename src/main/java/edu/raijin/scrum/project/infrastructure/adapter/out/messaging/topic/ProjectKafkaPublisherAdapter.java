@@ -3,7 +3,7 @@ package edu.raijin.scrum.project.infrastructure.adapter.out.messaging.topic;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import edu.raijin.commons.infrastructure.adapter.messaging.event.ProjectEvent;
+import edu.raijin.commons.infrastructure.adapter.messaging.event.scrum.ProjectEvent;
 import edu.raijin.commons.util.annotation.Adapter;
 import edu.raijin.scrum.project.domain.model.Project;
 import edu.raijin.scrum.project.domain.port.messaging.CreatedProjectPublisherPort;

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.raijin.commons.infrastructure.adapter.rest.dto.scrum.ProjectDto;
 import edu.raijin.commons.util.annotation.Adapter;
 import edu.raijin.scrum.project.domain.model.Project;
 import edu.raijin.scrum.project.domain.usecase.CloseProjectUseCase;
@@ -24,7 +25,6 @@ import edu.raijin.scrum.project.domain.usecase.FetchProjectUseCase;
 import edu.raijin.scrum.project.domain.usecase.FetchProjectsUseCase;
 import edu.raijin.scrum.project.domain.usecase.UpdateProjectUseCase;
 import edu.raijin.scrum.project.infrastructure.adapter.in.rest.dto.project.AddProjectDto;
-import edu.raijin.scrum.project.infrastructure.adapter.in.rest.dto.project.ProjectDto;
 import edu.raijin.scrum.project.infrastructure.adapter.in.rest.dto.project.ProjectIdDto;
 import edu.raijin.scrum.project.infrastructure.adapter.in.rest.mapper.ProjectDtoMapper;
 import jakarta.validation.Valid;

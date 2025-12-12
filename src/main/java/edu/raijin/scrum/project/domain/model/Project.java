@@ -85,4 +85,12 @@ public class Project {
             this.id = id;
         }
     }
+
+    public void delete() {
+        if (this.status == ProjectStatus.CLOSED) {
+            throw new RequestConflictException("El proyecto ya se encuentra cerrado");
+        }
+        this.deleted = true;
+        this.deletedAt = Instant.now();
+    }
 }

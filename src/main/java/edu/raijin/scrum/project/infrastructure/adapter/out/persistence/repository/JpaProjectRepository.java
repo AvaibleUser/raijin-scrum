@@ -1,5 +1,7 @@
 package edu.raijin.scrum.project.infrastructure.adapter.out.persistence.repository;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +12,9 @@ import edu.raijin.scrum.project.infrastructure.adapter.out.persistence.entity.Pr
 @Repository
 public interface JpaProjectRepository extends JpaRepository<ProjectsEntity, UUID> {
 
+    Optional<ProjectsEntity> findByIdAndDeletedFalse(UUID id);
+
+    List<ProjectsEntity> findAllByDeletedFalse();
+
+    boolean existsById(UUID id);
 }

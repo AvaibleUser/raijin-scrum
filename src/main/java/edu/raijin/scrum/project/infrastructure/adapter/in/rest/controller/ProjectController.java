@@ -4,7 +4,9 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 import java.util.UUID;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.raijin.commons.util.annotation.Adapter;
 import edu.raijin.scrum.project.domain.model.Project;
+import edu.raijin.scrum.project.domain.usecase.CloseProjectUseCase;
 import edu.raijin.scrum.project.domain.usecase.CreateProjectUseCase;
+import edu.raijin.scrum.project.domain.usecase.DeleteProjectUseCase;
 import edu.raijin.scrum.project.domain.usecase.FetchProjectUseCase;
 import edu.raijin.scrum.project.domain.usecase.FetchProjectsUseCase;
 import edu.raijin.scrum.project.domain.usecase.UpdateProjectUseCase;
@@ -36,6 +40,8 @@ public class ProjectController {
     private final FetchProjectsUseCase fetchAll;
     private final CreateProjectUseCase create;
     private final UpdateProjectUseCase update;
+    private final CloseProjectUseCase close;
+    private final DeleteProjectUseCase delete;
     private final ProjectDtoMapper mapper;
 
     @GetMapping
@@ -62,5 +68,16 @@ public class ProjectController {
     public ProjectDto update(@PathVariable UUID id, @RequestBody AddProjectDto project) {
         Project updated = update.update(id, mapper.toDomain(project));
         return mapper.toDto(updated);
+    }
+
+    @PatchMapping("/{id}/close")
+    public ProjectDto close(@PathVariable UUID id) {
+        Project closed = close.close(id);
+        return mapper.toDto(closed);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable UUID id) {
+        delete.delete(id);
     }
 }

@@ -8,5 +8,5 @@ import edu.raijin.scrum.project.domain.model.Project;
 @UseCase
 public interface UpdateProjectUseCase {
 
-    Project update(UUID projectId, String name, String description);
+    Project update(UUID projectId, Project update);
 }

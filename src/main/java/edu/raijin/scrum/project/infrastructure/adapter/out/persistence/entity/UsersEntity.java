@@ -1,0 +1,63 @@
+package edu.raijin.scrum.project.infrastructure.adapter.out.persistence.entity;
+
+import static lombok.AccessLevel.PRIVATE;
+
+import java.time.Instant;
+import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@Entity(name = "users")
+@Table(name = "users", schema = "project")
+@Data
+@Builder(toBuilder = true)
+@EqualsAndHashCode(of = "id")
+@NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor(access = PRIVATE)
+public class UsersEntity {
+
+    @Id
+    private UUID id;
+
+    @NonNull
+    @Column(nullable = false)
+    private String firstName;
+
+    @NonNull
+    @Column(nullable = false)
+    private String lastName;
+
+    @NonNull
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @NonNull
+    @Column(nullable = false)
+    private String role;
+
+    @NonNull
+    @Column(nullable = false)
+    private String color;
+
+    @CreationTimestamp
+    private Instant createdAt;
+
+    @UpdateTimestamp
+    private Instant updatedAt;
+
+    private Instant deletedAt;
+}

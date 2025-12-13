@@ -41,6 +41,9 @@ spring:
     bootstrap-servers:
       - "localhost:29092"
 
+    consumer:
+      value-deserializer: org.springframework.kafka.support.serializer.JacksonJsonDeserializer
+
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer
 
@@ -51,3 +54,6 @@ security:
 kafka:
   topics:
     project-commands-topic: project-commands
+    user-commands:
+      topic: user-commands
+      default-value: spring.json.value.default.type=edu.raijin.commons.infrastructure.adapter.messaging.event.identity.UserEvent

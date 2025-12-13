@@ -27,14 +27,6 @@ public class Member {
 
     private UUID userId;
 
-    private String firstName;
-
-    private String lastName;
-
-    private String dpi;
-
-    private String email;
-
     private Instant createdAt;
 
     private Instant updatedAt;
@@ -44,14 +36,5 @@ public class Member {
     public void checkValidRegistration() {
         requireNonNull(projectId, () -> new BadRequestException("El proyecto es requerido"));
         requireNonNull(userId, () -> new BadRequestException("El usuario es requerido"));
-        requireNonNull(firstName, () -> new BadRequestException("El nombre es requerido"));
-        requireNonNull(lastName, () -> new BadRequestException("El apellido es requerido"));
-        requireNonNull(dpi, () -> new BadRequestException("El DPI es requerido"));
-        requireNonNull(email, () -> new BadRequestException("El email es requerido"));
-    }
-
-    public void update(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 }

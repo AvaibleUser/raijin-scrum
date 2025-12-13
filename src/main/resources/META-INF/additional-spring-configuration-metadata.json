@@ -25,6 +25,16 @@
       "name": "kafka.topics.project-commands-topic",
       "type": "java.lang.String",
       "description": "The name of the Kafka topic"
+    },
+    {
+      "name": "kafka.topics.user-commands.topic",
+      "type": "java.lang.String",
+      "description": "The name of the Kafka topic"
+    },
+    {
+      "name": "kafka.topics.user-commands.default-value",
+      "type": "java.lang.String",
+      "description": "The property to set the class name of the event"
     }
   ]
 }

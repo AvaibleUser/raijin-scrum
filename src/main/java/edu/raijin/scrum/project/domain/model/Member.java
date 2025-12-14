@@ -27,12 +27,6 @@ public class Member {
 
     private UUID userId;
 
-    private Instant createdAt;
-
-    private Instant updatedAt;
-
-    private Instant deletedAt;
-
     public void checkValidRegistration() {
         requireNonNull(projectId, () -> new BadRequestException("El proyecto es requerido"));
         requireNonNull(userId, () -> new BadRequestException("El usuario es requerido"));

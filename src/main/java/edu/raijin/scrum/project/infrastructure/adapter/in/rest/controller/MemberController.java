@@ -1,6 +1,7 @@
 package edu.raijin.scrum.project.infrastructure.adapter.in.rest.controller;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import java.util.UUID;
 
@@ -48,6 +49,7 @@ public class MemberController {
     }
 
     @DeleteMapping("/{userId}")
+    @ResponseStatus(NO_CONTENT)
     public void removeMember(@PathVariable UUID projectId, @PathVariable UUID userId) {
         removeMember.remove(mapper.toDomain(projectId, userId));
     }

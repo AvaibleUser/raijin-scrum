@@ -1,5 +1,7 @@
 package edu.raijin.scrum.project.domain.model;
 
+import static edu.raijin.commons.util.exception.Exceptions.requireNonBlank;
+import static edu.raijin.commons.util.exception.Exceptions.requireNonNegative;
 import static edu.raijin.commons.util.exception.Exceptions.requireNonNull;
 import static java.util.Objects.isNull;
 import static lombok.AccessLevel.NONE;
@@ -54,12 +56,9 @@ public class Project {
     private Instant deletedAt;
 
     public void checkValidRegistration() {
-        requireNonNull(name, () -> new BadRequestException("El nombre del proyecto es requerido"));
+        requireNonBlank(name, () -> new BadRequestException("El nombre del proyecto es requerido"));
         requireNonNull(status, () -> new BadRequestException("El estado del proyecto es requerido"));
-        requireNonNull(monthlyIncome, () -> new BadRequestException("El ingreso mensual es requerido"));
-        if (monthlyIncome.compareTo(BigDecimal.ZERO) < 0) {
-            throw new BadRequestException("El ingreso mensual es requerido");
-        }
+        requireNonNegative(monthlyIncome, () -> new BadRequestException("El ingreso mensual es requerido"));
     }
 
     public void close() {

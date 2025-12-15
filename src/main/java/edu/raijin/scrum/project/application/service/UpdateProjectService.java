@@ -24,6 +24,7 @@ public class UpdateProjectService implements UpdateProjectUseCase {
                 .orElseThrow(() -> new ValueNotFoundException("El proyecto no existe"));
 
         project.updateFrom(update);
+        project.checkValidRegistration();
         Project updated = updateProject.update(project);
 
         eventPublisher.publishUpdatedProject(updated);

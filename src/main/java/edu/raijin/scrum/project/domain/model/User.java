@@ -3,6 +3,7 @@ package edu.raijin.scrum.project.domain.model;
 import static edu.raijin.commons.util.exception.Exceptions.requireNonNull;
 import static lombok.AccessLevel.NONE;
 import static lombok.AccessLevel.PRIVATE;
+import static org.apache.commons.lang3.ObjectUtils.firstNonNull;
 
 import java.util.UUID;
 
@@ -43,10 +44,10 @@ public class User {
         requireNonNull(color, () -> new BadRequestException("El color es requerido"));
     }
 
-    public void update(String firstName, String lastName, String role, String color) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.role = role;
-        this.color = color;
+    public void update(User updated) {
+        this.firstName = firstNonNull(updated.firstName, firstName);
+        this.lastName = firstNonNull(updated.lastName, lastName);
+        this.role = firstNonNull(updated.role, role);
+        this.color = firstNonNull(updated.color, color);
     }
 }

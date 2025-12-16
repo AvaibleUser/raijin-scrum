@@ -45,6 +45,9 @@ public class UsersEntity {
     @Column(nullable = false)
     private String color;
 
+    @Builder.Default
+    private Boolean deleted = false;
+
     @CreationTimestamp
     private Instant createdAt;
 

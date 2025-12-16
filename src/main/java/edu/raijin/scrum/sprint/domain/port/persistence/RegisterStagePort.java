@@ -6,7 +6,7 @@ import edu.raijin.scrum.sprint.domain.model.Stage;
 @Port
 public interface RegisterStagePort {
 
-    boolean existsAnotherDefault(Long sprintId);
+    boolean existsDefault(Long sprintId);
 
     boolean existsSprint(Long sprintId);
 

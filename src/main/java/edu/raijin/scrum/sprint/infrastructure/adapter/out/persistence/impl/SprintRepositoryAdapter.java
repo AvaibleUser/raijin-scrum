@@ -44,7 +44,7 @@ public class SprintRepositoryAdapter implements RegisterSprintPort, FindSprintPo
 
     @Override
     public Paged<Sprint> findAll(UUID projectId, Pageable pageable) {
-        Page<SprintsEntity> sprints = sprintRepository.findProjectSprintsPage(projectId, pageable);
+        Page<SprintsEntity> sprints = sprintRepository.findByProjectIdAndDeletedFalse(projectId, pageable);
         return Paged.from(sprints.map(mapper::toSprint));
     }
 
@@ -62,6 +62,6 @@ public class SprintRepositoryAdapter implements RegisterSprintPort, FindSprintPo
 
     @Override
     public boolean existsActiveSprint(UUID projectId) {
-        return sprintRepository.existsActiveProjectSprint(projectId);
+        return sprintRepository.existsByActiveAndProjectId(projectId);
     }
 }

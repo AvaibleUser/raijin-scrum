@@ -22,7 +22,7 @@ public class CreateStageService implements CreateStageUseCase {
         if (!register.existsSprint(sprintId)) {
             throw new ValueNotFoundException("El sprint no se encuentra registrado");
         }
-        if (stage.getIsDefault() && register.existsAnotherDefault(sprintId)) {
+        if (stage.getIsDefault() && register.existsDefault(sprintId)) {
             throw new RequestConflictException("El sprint ya tiene un stage por defecto");
         }
         stage.checkValidRegistration();

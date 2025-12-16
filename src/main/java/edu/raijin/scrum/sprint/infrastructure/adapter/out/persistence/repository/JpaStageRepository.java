@@ -12,21 +12,13 @@ import edu.raijin.scrum.sprint.infrastructure.adapter.out.persistence.entity.Sta
 @Repository
 public interface JpaStageRepository extends JpaRepository<StagesEntity, Long> {
 
-    Optional<StagesEntity> findByIdAndDeletedFalseAndSprintIdAndSprintDeletedFalseAndSprintProjectDeletedFalse(Long id,
-            Long sprintId);
+    Optional<StagesEntity> findByIdAndSprintIdAndDeletedFalse(Long id, Long sprintId);
 
-    Page<StagesEntity> findBySprintIdAndSprintDeletedFalseAndSprintProjectDeletedFalse(Long sprintId,
-            Pageable pageable);
+    Page<StagesEntity> findBySprintIdAndDeletedFalse(Long sprintId, Pageable pageable);
+
+    boolean existsByIdAndDeletedFalse(Long id);
 
     boolean existsBySprintIdAndIsDefaultTrue(Long sprintId);
 
-    boolean existsByIdNotAndSprintIdAndIsDefaultTrue(Long sprintId, Long stageId);
-
-    default Page<StagesEntity> findPageByEachId(Long sprintId, Pageable pageable) {
-        return findBySprintIdAndSprintDeletedFalseAndSprintProjectDeletedFalse(sprintId, pageable);
-    }
-
-    default Optional<StagesEntity> findByEachId(Long id, Long sprintId) {
-        return findByIdAndDeletedFalseAndSprintIdAndSprintDeletedFalseAndSprintProjectDeletedFalse(id, sprintId);
-    }
+    boolean existsByIdNotAndSprintIdAndIsDefaultTrue(Long stageId, Long sprintId);
 }

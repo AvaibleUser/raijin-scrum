@@ -28,7 +28,7 @@ public class UserRepositoryAdapter implements RegisterUserPort, FindProjectMembe
 
     @Override
     public boolean exists(String email) {
-        return userRepository.existsByEmail(email);
+        return userRepository.existsByEmailAndDeletedFalse(email);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class UserRepositoryAdapter implements RegisterUserPort, FindProjectMembe
 
     @Override
     public Paged<User> findAll(UUID projectId, Pageable pageable) {
-        Page<UsersEntity> users = userRepository.findByDeletedAtIsNull(pageable);
+        Page<UsersEntity> users = userRepository.findByDeletedFalse(pageable);
         return Paged.from(users.map(mapper::toDomain));
     }
 }

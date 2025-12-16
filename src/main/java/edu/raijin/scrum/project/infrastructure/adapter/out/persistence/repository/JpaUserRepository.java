@@ -1,5 +1,6 @@
 package edu.raijin.scrum.project.infrastructure.adapter.out.persistence.repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -12,7 +13,11 @@ import edu.raijin.scrum.project.infrastructure.adapter.out.persistence.entity.Us
 @Repository
 public interface JpaUserRepository extends JpaRepository<UsersEntity, UUID> {
 
-    Page<UsersEntity> findByDeletedAtIsNull(Pageable request);
+    Optional<UsersEntity> findByIdAndDeletedFalse(UUID id);
 
-    boolean existsByEmail(String email);
+    Page<UsersEntity> findByDeletedFalse(Pageable request);
+
+    boolean existsByEmailAndDeletedFalse(String email);
+
+    boolean existsByIdAndDeletedFalse(UUID id);
 }

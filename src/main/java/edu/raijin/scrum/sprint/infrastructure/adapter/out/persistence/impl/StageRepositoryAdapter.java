@@ -30,8 +30,7 @@ public class StageRepositoryAdapter implements RegisterStagePort, FindStagePort,
 
     @Override
     public Optional<Stage> findBySprintIdAndId(Long sprintId, Long stageId) {
-        return stageRepository.findByEachId(stageId, sprintId)
-                .map(mapper::toDomain);
+        return stageRepository.findByIdAndSprintIdAndDeletedFalse(stageId, sprintId).map(mapper::toDomain);
     }
 
     @Override
@@ -42,13 +41,13 @@ public class StageRepositoryAdapter implements RegisterStagePort, FindStagePort,
 
     @Override
     public Paged<Stage> findAll(Long sprintId, Pageable pageable) {
-        Page<StagesEntity> stages = stageRepository.findPageByEachId(sprintId, pageable);
+        Page<StagesEntity> stages = stageRepository.findBySprintIdAndDeletedFalse(sprintId, pageable);
         return Paged.from(stages.map(mapper::toDomain));
     }
 
     @Override
     public boolean existsSprint(Long sprintId) {
-        return sprintRepository.existsProjectSprint(sprintId);
+        return sprintRepository.existsByIdAndDeletedFalse(sprintId);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class StageRepositoryAdapter implements RegisterStagePort, FindStagePort,
     }
 
     @Override
-    public boolean existsAnotherDefault(Long sprintId) {
+    public boolean existsDefault(Long sprintId) {
         return stageRepository.existsBySprintIdAndIsDefaultTrue(sprintId);
     }
 

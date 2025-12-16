@@ -1,3 +1,4 @@
+
 package edu.raijin.scrum.project.domain.model;
 
 import static edu.raijin.commons.util.exception.Exceptions.requireNonNull;
@@ -5,6 +6,7 @@ import static lombok.AccessLevel.NONE;
 import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang3.ObjectUtils.firstNonNull;
 
+import java.time.Instant;
 import java.util.UUID;
 
 import edu.raijin.commons.util.exception.BadRequestException;
@@ -34,6 +36,15 @@ public class User {
     private String role;
 
     private String color;
+
+    @Builder.Default
+    private Boolean deleted = false;
+
+    private Instant createdAt;
+
+    private Instant updatedAt;
+
+    private Instant deletedAt;
 
     public void checkValidRegistration() {
         requireNonNull(id, () -> new BadRequestException("El usuario es requerido"));

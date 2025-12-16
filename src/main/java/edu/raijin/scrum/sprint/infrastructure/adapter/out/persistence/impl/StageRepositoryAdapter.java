@@ -1,12 +1,10 @@
 package edu.raijin.scrum.sprint.infrastructure.adapter.out.persistence.impl;
 
+import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import edu.raijin.commons.domain.model.Paged;
 import edu.raijin.commons.util.annotation.Adapter;
 import edu.raijin.scrum.sprint.domain.model.Stage;
 import edu.raijin.scrum.sprint.domain.port.persistence.FindStagePort;
@@ -40,9 +38,9 @@ public class StageRepositoryAdapter implements RegisterStagePort, FindStagePort,
     }
 
     @Override
-    public Paged<Stage> findAll(Long sprintId, Pageable pageable) {
-        Page<StagesEntity> stages = stageRepository.findBySprintIdAndDeletedFalse(sprintId, pageable);
-        return Paged.from(stages.map(mapper::toDomain));
+    public List<Stage> findAll(Long sprintId) {
+        List<StagesEntity> stages = stageRepository.findBySprintIdAndDeletedFalse(sprintId);
+        return stages.stream().map(mapper::toDomain).toList();
     }
 
     @Override

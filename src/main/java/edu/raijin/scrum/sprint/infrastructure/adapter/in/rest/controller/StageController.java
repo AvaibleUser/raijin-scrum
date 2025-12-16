@@ -3,7 +3,8 @@ package edu.raijin.scrum.sprint.infrastructure.adapter.in.rest.controller;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
-import org.springframework.data.domain.Pageable;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.raijin.commons.domain.model.Paged;
 import edu.raijin.commons.util.annotation.Adapter;
 import edu.raijin.scrum.sprint.domain.model.Stage;
 import edu.raijin.scrum.sprint.domain.usecase.CreateStageUseCase;
@@ -40,8 +40,8 @@ public class StageController {
     private final StageDtoMapper mapper;
 
     @GetMapping
-    public Paged<StageDto> fetchAll(Pageable pageable, @PathVariable Long sprintId) {
-        return fetch.fetchAll(sprintId, pageable).map(mapper::toDto);
+    public List<StageDto> fetchAll(@PathVariable Long sprintId) {
+        return fetch.fetchAll(sprintId).stream().map(mapper::toDto).toList();
     }
 
     @PostMapping

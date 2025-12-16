@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 
 @Adapter
 @RestController
-@RequestMapping("/stages/{stageId}/stories")
+@RequestMapping({ "/stages/{stageId}/stories", "/stories" })
 @RequiredArgsConstructor
 public class StoryController {
 
@@ -40,26 +40,27 @@ public class StoryController {
     private final StoryDtoMapper mapper;
 
     @GetMapping
-    public List<StoryDto> fetchAll(@PathVariable Long stageId) {
+    public List<StoryDto> fetchAll(@PathVariable(required = false) Long stageId) {
         return fetch.fetchAll(stageId).stream().map(mapper::toDto).toList();
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public StoryDto create(@PathVariable Long stageId, @RequestBody @Valid AddStoryDto story) {
+    public StoryDto create(@PathVariable(required = false) Long stageId, @RequestBody @Valid AddStoryDto story) {
         Story created = create.create(stageId, mapper.toDomain(story));
         return mapper.toDto(created);
     }
 
     @PutMapping("/{storyId}")
-    public StoryDto update(@PathVariable Long stageId, @PathVariable Long storyId, @RequestBody AddStoryDto story) {
+    public StoryDto update(@PathVariable(required = false) Long stageId, @PathVariable(required = false) Long storyId,
+            @RequestBody AddStoryDto story) {
         Story updated = update.update(stageId, storyId, mapper.toDomain(story));
         return mapper.toDto(updated);
     }
 
     @DeleteMapping("/{storyId}")
     @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable Long stageId, @PathVariable Long storyId) {
+    public void delete(@PathVariable(required = false) Long stageId, @PathVariable(required = false) Long storyId) {
         delete.delete(stageId, storyId);
     }
 }

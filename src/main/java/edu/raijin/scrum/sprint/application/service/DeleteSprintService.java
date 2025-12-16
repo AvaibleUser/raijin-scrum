@@ -3,6 +3,7 @@ package edu.raijin.scrum.sprint.application.service;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.raijin.commons.util.exception.ValueNotFoundException;
 import edu.raijin.scrum.sprint.domain.model.Sprint;
@@ -17,6 +18,7 @@ public class DeleteSprintService implements DeleteSprintUseCase {
     private final UpdateSprintPort update;
 
     @Override
+    @Transactional
     public void delete(UUID projectId, Long sprintId) {
         Sprint deleted = update.findByIdAndProjectId(sprintId, projectId)
                 .orElseThrow(() -> new ValueNotFoundException("El sprint no se encuentra registrado"));

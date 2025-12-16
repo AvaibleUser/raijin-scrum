@@ -7,16 +7,16 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import edu.raijin.commons.util.annotation.Adapter;
-import edu.raijin.scrum.sprint.domain.model.Sprint;
-import edu.raijin.scrum.sprint.infrastructure.adapter.out.persistence.entity.SprintsEntity;
+import edu.raijin.scrum.sprint.domain.model.Stage;
+import edu.raijin.scrum.sprint.infrastructure.adapter.out.persistence.entity.StagesEntity;
 
 @Adapter
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = IGNORE, unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface SprintEntityMapper {
+public interface StageEntityMapper {
 
-    @Mapping(target = "projectId", source = "project.id")
-    Sprint toSprint(SprintsEntity entity);
+    @Mapping(target = "sprintId", source = "sprint.id")
+    Stage toDomain(StagesEntity entity);
 
-    @Mapping(target = "project.id", source = "projectId")
-    SprintsEntity toEntity(Sprint sprint);
+    @Mapping(target = "sprint.id", source = "sprintId")
+    StagesEntity toEntity(Stage stage);
 }

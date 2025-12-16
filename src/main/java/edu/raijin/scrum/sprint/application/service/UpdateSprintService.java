@@ -3,6 +3,7 @@ package edu.raijin.scrum.sprint.application.service;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.raijin.commons.util.exception.RequestConflictException;
 import edu.raijin.commons.util.exception.ValueNotFoundException;
@@ -18,6 +19,7 @@ public class UpdateSprintService implements UpdateSprintUseCase {
     private final UpdateSprintPort update;
 
     @Override
+    @Transactional
     public Sprint update(UUID projectId, Long sprintId, Sprint sprint) {
         Sprint updated = update.findByIdAndProjectId(sprintId, projectId)
                 .orElseThrow(() -> new ValueNotFoundException("El sprint no se encuentra registrado"));

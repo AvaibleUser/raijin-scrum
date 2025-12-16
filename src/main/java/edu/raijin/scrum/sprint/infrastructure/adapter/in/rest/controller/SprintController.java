@@ -1,6 +1,7 @@
 package edu.raijin.scrum.sprint.infrastructure.adapter.in.rest.controller;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import java.util.UUID;
 
@@ -61,6 +62,7 @@ public class SprintController {
     }
 
     @DeleteMapping("/{sprintId}")
+    @ResponseStatus(NO_CONTENT)
     public void delete(@PathVariable UUID projectId, @PathVariable Long sprintId) {
         delete.delete(projectId, sprintId);
     }

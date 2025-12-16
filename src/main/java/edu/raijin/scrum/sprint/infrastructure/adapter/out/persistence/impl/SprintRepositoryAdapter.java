@@ -31,21 +31,20 @@ public class SprintRepositoryAdapter implements RegisterSprintPort, FindSprintPo
 
     @Override
     public boolean existsProject(UUID id) {
-        return projectRepository.existsById(id);
+        return projectRepository.existsByIdAndDeletedFalse(id);
     }
 
     @Override
     public Sprint create(UUID projectId, Sprint sprint) {
-        SprintsEntity entity = mapper.toEntity(sprint);
         ProjectsEntity project = projectRepository.findById(projectId).get();
+        SprintsEntity entity = mapper.toEntity(sprint).withProject(project);
 
-        entity.setProject(project);
         return mapper.toSprint(sprintRepository.save(entity));
     }
 
     @Override
     public Paged<Sprint> findAll(UUID projectId, Pageable pageable) {
-        Page<SprintsEntity> sprints = sprintRepository.findByProjectId(projectId, pageable);
+        Page<SprintsEntity> sprints = sprintRepository.findProjectSprintsPage(projectId, pageable);
         return Paged.from(sprints.map(mapper::toSprint));
     }
 

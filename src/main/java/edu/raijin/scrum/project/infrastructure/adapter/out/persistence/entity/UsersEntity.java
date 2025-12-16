@@ -17,8 +17,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Entity(name = "users")
 @Table(name = "users", schema = "project")
@@ -26,30 +24,24 @@ import lombok.RequiredArgsConstructor;
 @Builder(toBuilder = true)
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
 public class UsersEntity {
 
     @Id
     private UUID id;
 
-    @NonNull
     @Column(nullable = false)
     private String firstName;
 
-    @NonNull
     @Column(nullable = false)
     private String lastName;
 
-    @NonNull
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NonNull
     @Column(nullable = false)
     private String role;
 
-    @NonNull
     @Column(nullable = false)
     private String color;
 

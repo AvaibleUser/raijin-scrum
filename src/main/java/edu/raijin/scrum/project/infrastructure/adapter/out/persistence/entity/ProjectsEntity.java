@@ -28,8 +28,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Entity(name = "projects")
 @Table(name = "projects", schema = "project")
@@ -37,7 +35,6 @@ import lombok.RequiredArgsConstructor;
 @Builder(toBuilder = true)
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
 public class ProjectsEntity {
 
@@ -45,7 +42,6 @@ public class ProjectsEntity {
     @GeneratedValue(strategy = UUID)
     private UUID id;
 
-    @NonNull
     @Column(nullable = false)
     private String name;
 

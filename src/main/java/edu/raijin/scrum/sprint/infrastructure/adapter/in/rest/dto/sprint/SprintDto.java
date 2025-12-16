@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import edu.raijin.commons.domain.type.SprintStatus;
 
 public record SprintDto(
-        String id,
+        Long id,
         String name,
         String description,
         LocalDate startDate,

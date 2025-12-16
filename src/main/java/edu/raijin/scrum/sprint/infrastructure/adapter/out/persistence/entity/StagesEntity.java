@@ -1,20 +1,15 @@
 package edu.raijin.scrum.sprint.infrastructure.adapter.out.persistence.entity;
 
-import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.time.Instant;
-import java.time.LocalDate;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import edu.raijin.commons.domain.type.SprintStatus;
-import edu.raijin.scrum.project.infrastructure.adapter.out.persistence.entity.ProjectsEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -27,14 +22,14 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.With;
 
-@Entity(name = "sprints")
-@Table(name = "sprints", schema = "sprint")
+@Entity(name = "story_stages")
+@Table(name = "story_stages", schema = "sprint")
 @Data
 @Builder(toBuilder = true)
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
-public class SprintsEntity {
+public class StagesEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -42,8 +37,8 @@ public class SprintsEntity {
 
     @With
     @ManyToOne
-    @JoinColumn(name = "project_id", nullable = false)
-    private ProjectsEntity project;
+    @JoinColumn(name = "sprint_id", nullable = false)
+    private SprintsEntity sprint;
 
     @Column(nullable = false)
     private String name;
@@ -51,14 +46,10 @@ public class SprintsEntity {
     private String description;
 
     @Column(nullable = false)
-    private LocalDate startDate;
-
-    @Column(nullable = false)
-    private LocalDate endDate;
+    private Integer orderIndex;
 
     @Builder.Default
-    @Enumerated(STRING)
-    private SprintStatus status = SprintStatus.PENDING;
+    private Boolean isDefault = false;
 
     @Builder.Default
     private Boolean deleted = false;

@@ -14,13 +14,27 @@ import edu.raijin.scrum.sprint.infrastructure.adapter.out.persistence.entity.Spr
 @Repository
 public interface JpaSprintRepository extends JpaRepository<SprintsEntity, Long> {
 
-    Page<SprintsEntity> findByProjectId(UUID projectId, Pageable pageable);
+    Page<SprintsEntity> findByProjectIdAndDeletedFalseAndDeletedFalse(UUID projectId, Pageable pageable);
 
-    Optional<SprintsEntity> findByIdAndProjectId(Long id, UUID projectId);
+    Optional<SprintsEntity> findByIdAndDeletedFalseAndProjectIdAndProjectDeletedFalse(Long id, UUID projectId);
 
-    boolean existsByProjectIdAndStatus(UUID projectId, SprintStatus status);
+    boolean existsByProjectIdAndProjectDeletedFalseAndStatusAndDeletedFalse(UUID projectId, SprintStatus status);
+
+    boolean existsByIdAndDeletedFalseAndProjectDeletedFalse(Long id);
+
+    default Optional<SprintsEntity> findByIdAndProjectId(Long id, UUID projectId) {
+        return findByIdAndProjectId(id, projectId);
+    }
+
+    default Page<SprintsEntity> findProjectSprintsPage(UUID projectId, Pageable pageable) {
+        return findByProjectIdAndDeletedFalseAndDeletedFalse(projectId, pageable);
+    }
 
     default boolean existsActiveProjectSprint(UUID projectId) {
-        return existsByProjectIdAndStatus(projectId, SprintStatus.ACTIVE);
+        return existsByProjectIdAndProjectDeletedFalseAndStatusAndDeletedFalse(projectId, SprintStatus.ACTIVE);
+    }
+
+    default boolean existsProjectSprint(Long sprintId) {
+        return existsByIdAndDeletedFalseAndProjectDeletedFalse(sprintId);
     }
 }

@@ -11,6 +11,8 @@ import edu.raijin.scrum.story.infrastructure.adapter.out.persistence.entity.Stor
 @Repository
 public interface JpaStoryRepository extends JpaRepository<StoriesEntity, Long> {
 
+    boolean existsByIdAndDeletedFalse(Long id);
+
     Optional<StoriesEntity> findByIdAndStageIdAndDeletedFalse(Long id, Long stageId);
 
     List<StoriesEntity> findByStageIdAndDeletedFalse(Long stageId);

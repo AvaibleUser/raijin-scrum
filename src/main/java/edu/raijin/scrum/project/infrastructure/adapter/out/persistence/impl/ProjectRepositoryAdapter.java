@@ -22,6 +22,7 @@ import edu.raijin.scrum.project.infrastructure.adapter.out.persistence.entity.Us
 import edu.raijin.scrum.project.infrastructure.adapter.out.persistence.mapper.ProjectEntityMapper;
 import edu.raijin.scrum.project.infrastructure.adapter.out.persistence.repository.JpaProjectRepository;
 import edu.raijin.scrum.project.infrastructure.adapter.out.persistence.repository.JpaUserRepository;
+import edu.raijin.scrum.sprint.infrastructure.adapter.out.persistence.repository.JpaSprintRepository;
 import lombok.RequiredArgsConstructor;
 
 @Adapter
@@ -31,6 +32,7 @@ public class ProjectRepositoryAdapter implements FindProjectPort, RegisterProjec
         AddProjectMemberPort, RemoveProjectMemberPort {
 
     private final JpaProjectRepository projectRepository;
+    private final JpaSprintRepository sprintRepository;
     private final JpaUserRepository userRepository;
     private final ProjectEntityMapper mapper;
 
@@ -59,9 +61,8 @@ public class ProjectRepositoryAdapter implements FindProjectPort, RegisterProjec
     }
 
     @Override
-    public boolean hasSprintsAttached(UUID id) {
-        // TODO: implement project sprints check
-        return projectRepository.existsById(id);
+    public boolean hasActiveSprintsAttached(UUID id) {
+        return sprintRepository.existsByNotFinishedAndProjectId(id);
     }
 
     @Override

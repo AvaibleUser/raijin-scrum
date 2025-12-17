@@ -7,5 +7,5 @@ import edu.raijin.commons.util.annotation.Port;
 @Port
 public interface CloseProjectPort extends UpdateProjectPort {
 
-    boolean hasSprintsAttached(UUID id);
+    boolean hasActiveSprintsAttached(UUID id);
 }

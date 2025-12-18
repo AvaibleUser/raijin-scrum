@@ -58,6 +58,10 @@ public class Story {
         requireNonNull(this.priority, () -> new BadRequestException("La prioridad de la historia es requerida"));
     }
 
+    public void setStageId(Long stageId) {
+        this.stageId = stageId;
+    }
+
     public void updateFrom(Story updated) {
         this.name = firstNonNull(updated.name, name);
         this.productOwnerId = updated.productOwnerId;

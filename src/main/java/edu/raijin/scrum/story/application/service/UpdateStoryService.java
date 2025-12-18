@@ -17,7 +17,7 @@ public class UpdateStoryService implements UpdateStoryUseCase {
     @Override
     public Story update(Long stageId, Long storyId, Story story) {
         Story updated = update.findByIdAndStageId(storyId, stageId)
-                .orElseThrow(() -> new ValueNotFoundException("El story no se encuentra registrado"));
+                .orElseThrow(() -> new ValueNotFoundException("La historia no se encuentra registrado"));
 
         updated.updateFrom(story);
         updated.checkValidRegistration();

@@ -5,21 +5,23 @@ import org.springframework.stereotype.Service;
 import edu.raijin.commons.util.exception.ValueNotFoundException;
 import edu.raijin.scrum.story.domain.model.Story;
 import edu.raijin.scrum.story.domain.port.persistence.UpdateStoryPort;
-import edu.raijin.scrum.story.domain.usecase.DeleteStoryUseCase;
+import edu.raijin.scrum.story.domain.usecase.UpdateStoryStageUseCase;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class DeleteStoryService implements DeleteStoryUseCase {
+public class UpdateStoryStageService implements UpdateStoryStageUseCase {
 
     private final UpdateStoryPort update;
 
     @Override
-    public void delete(Long stageId, Long storyId) {
-        Story story = update.findByIdAndStageId(storyId, stageId)
+    public Story update(Long stageId, Long storyId, Long newStageId) {
+        Story updated = update.findByIdAndStageId(storyId, stageId)
                 .orElseThrow(() -> new ValueNotFoundException("La historia no se encuentra registrado"));
 
-        story.delete();
-        update.update(story);
+        updated.setStageId(newStageId);
+        updated.checkValidRegistration();
+
+        return update.update(updated);
     }
 }

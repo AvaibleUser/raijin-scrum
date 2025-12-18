@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,8 +21,10 @@ import edu.raijin.scrum.story.domain.model.Story;
 import edu.raijin.scrum.story.domain.usecase.CreateStoryUseCase;
 import edu.raijin.scrum.story.domain.usecase.DeleteStoryUseCase;
 import edu.raijin.scrum.story.domain.usecase.FetchStoriesUseCase;
+import edu.raijin.scrum.story.domain.usecase.UpdateStoryStageUseCase;
 import edu.raijin.scrum.story.domain.usecase.UpdateStoryUseCase;
 import edu.raijin.scrum.story.infrastructure.adapter.in.rest.dto.story.AddStoryDto;
+import edu.raijin.scrum.story.infrastructure.adapter.in.rest.dto.story.ChangeStoryStageDto;
 import edu.raijin.scrum.story.infrastructure.adapter.in.rest.dto.story.StoryDto;
 import edu.raijin.scrum.story.infrastructure.adapter.in.rest.mapper.StoryDtoMapper;
 import jakarta.validation.Valid;
@@ -36,6 +39,7 @@ public class StoryController {
     private final FetchStoriesUseCase fetch;
     private final CreateStoryUseCase create;
     private final UpdateStoryUseCase update;
+    private final UpdateStoryStageUseCase updateStage;
     private final DeleteStoryUseCase delete;
     private final StoryDtoMapper mapper;
 
@@ -55,6 +59,13 @@ public class StoryController {
     public StoryDto update(@PathVariable(required = false) Long stageId, @PathVariable(required = false) Long storyId,
             @RequestBody AddStoryDto story) {
         Story updated = update.update(stageId, storyId, mapper.toDomain(story));
+        return mapper.toDto(updated);
+    }
+
+    @PatchMapping("/{storyId}/stage")
+    public StoryDto update(@PathVariable(required = false) Long stageId, @PathVariable(required = false) Long storyId,
+            @RequestBody ChangeStoryStageDto story) {
+        Story updated = updateStage.update(stageId, storyId, story.stageId());
         return mapper.toDto(updated);
     }
 

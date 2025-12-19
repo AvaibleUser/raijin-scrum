@@ -64,4 +64,9 @@ public class SprintRepositoryAdapter implements RegisterSprintPort, FindSprintPo
     public boolean existsActiveSprint(UUID projectId) {
         return sprintRepository.existsByActiveAndProjectId(projectId);
     }
+
+    @Override
+    public boolean existsAnotherActive(UUID projectId, Long sprintId) {
+        return sprintRepository.existsByActiveAndNotIdAndProjectId(sprintId, projectId);
+    }
 }

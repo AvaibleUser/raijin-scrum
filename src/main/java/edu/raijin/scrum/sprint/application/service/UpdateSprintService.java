@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.raijin.commons.domain.type.SprintStatus;
 import edu.raijin.commons.util.exception.RequestConflictException;
 import edu.raijin.commons.util.exception.ValueNotFoundException;
 import edu.raijin.scrum.sprint.domain.model.Sprint;
@@ -24,8 +25,8 @@ public class UpdateSprintService implements UpdateSprintUseCase {
         Sprint updated = update.findByIdAndProjectId(sprintId, projectId)
                 .orElseThrow(() -> new ValueNotFoundException("El sprint no se encuentra registrado"));
 
-        if (update.existsActiveSprint(projectId)) {
-            throw new RequestConflictException("El proyecto tiene un sprint activo");
+        if (sprint.getStatus() == SprintStatus.ACTIVE && update.existsAnotherActive(projectId, sprintId)) {
+            throw new RequestConflictException("El proyecto ya tiene un sprint activo");
         }
 
         updated.updateFrom(sprint);

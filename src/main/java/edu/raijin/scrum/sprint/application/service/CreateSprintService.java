@@ -5,6 +5,8 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.raijin.commons.domain.type.SprintStatus;
+import edu.raijin.commons.util.exception.RequestConflictException;
 import edu.raijin.commons.util.exception.ValueNotFoundException;
 import edu.raijin.scrum.sprint.domain.model.Sprint;
 import edu.raijin.scrum.sprint.domain.model.Stage;
@@ -57,6 +59,9 @@ public class CreateSprintService implements CreateSprintUseCase {
     public Sprint create(UUID projectId, Sprint sprint) {
         if (!registerSprint.existsProject(projectId)) {
             throw new ValueNotFoundException("El proyecto no se encuentra registrado");
+        }
+        if (sprint.getStatus() == SprintStatus.ACTIVE && registerSprint.existsActiveSprint(projectId)) {
+            throw new RequestConflictException("El proyecto tiene un sprint activo");
         }
         sprint.checkValidRegistration();
 

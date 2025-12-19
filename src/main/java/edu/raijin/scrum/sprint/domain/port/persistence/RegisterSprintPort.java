@@ -8,6 +8,8 @@ import edu.raijin.scrum.sprint.domain.model.Sprint;
 @Port
 public interface RegisterSprintPort {
 
+    boolean existsActiveSprint(UUID projectId);
+
     boolean existsProject(UUID id);
 
     Sprint create(UUID projectId, Sprint sprint);

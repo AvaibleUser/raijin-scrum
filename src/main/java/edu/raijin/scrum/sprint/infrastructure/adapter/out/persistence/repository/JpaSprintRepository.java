@@ -18,14 +18,20 @@ public interface JpaSprintRepository extends JpaRepository<SprintsEntity, Long> 
 
     Page<SprintsEntity> findByProjectIdAndDeletedFalse(UUID projectId, Pageable pageable);
 
-    boolean existsByStatusAndDeletedFalseAndProjectId(UUID projectId, SprintStatus status);
+    boolean existsByStatusAndDeletedFalseAndProjectId(SprintStatus status, UUID projectId);
+
+    boolean existsByStatusAndDeletedFalseAndIdNotAndProjectId(SprintStatus status, Long id, UUID projectId);
 
     boolean existsByIdAndDeletedFalse(Long id);
 
     Optional<SprintsEntity> findByIdAndProjectId(Long id, UUID projectId);
 
     default boolean existsByActiveAndProjectId(UUID projectId) {
-        return existsByStatusAndDeletedFalseAndProjectId(projectId, SprintStatus.ACTIVE);
+        return existsByStatusAndDeletedFalseAndProjectId(SprintStatus.ACTIVE, projectId);
+    }
+
+    default boolean existsByActiveAndNotIdAndProjectId(Long id, UUID projectId) {
+        return existsByStatusAndDeletedFalseAndIdNotAndProjectId(SprintStatus.ACTIVE, id, projectId);
     }
 
     default boolean existsByNotFinishedAndProjectId(UUID projectId) {

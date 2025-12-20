@@ -12,5 +12,9 @@ public interface RegisterStoryPort {
 
     boolean existsStage(Long stageId);
 
+    boolean existsProject(UUID projectId);
+
     Story create(Long stageId, Story story);
+
+    Story create(UUID projectId, Story story);
 }

@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import edu.raijin.commons.domain.type.StoryPriority;
+import edu.raijin.scrum.project.infrastructure.adapter.out.persistence.entity.ProjectsEntity;
 import edu.raijin.scrum.project.infrastructure.adapter.out.persistence.entity.UsersEntity;
 import edu.raijin.scrum.sprint.infrastructure.adapter.out.persistence.entity.StagesEntity;
 import jakarta.persistence.Column;
@@ -25,6 +26,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.With;
 
 @Entity(name = "stories")
 @Table(name = "stories", schema = "story")
@@ -39,9 +41,14 @@ public class StoriesEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
+    @With
     @ManyToOne
-    @JoinColumn(name = "stage_id", nullable = false)
+    @JoinColumn(name = "stage_id", nullable = true)
     private StagesEntity stage;
+
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    private ProjectsEntity project;
 
     @ManyToOne
     @JoinColumn(name = "product_owner_id", nullable = true)

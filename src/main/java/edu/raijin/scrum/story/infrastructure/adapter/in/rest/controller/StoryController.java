@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +32,6 @@ import lombok.RequiredArgsConstructor;
 
 @Adapter
 @RestController
-@RequestMapping({ "/stages/{stageId}/stories", "/stories" })
 @RequiredArgsConstructor
 public class StoryController {
 
@@ -43,35 +42,65 @@ public class StoryController {
     private final DeleteStoryUseCase delete;
     private final StoryDtoMapper mapper;
 
-    @GetMapping
-    public List<StoryDto> fetchAll(@PathVariable(required = false) Long stageId) {
+    @GetMapping("/stages/{stageId}/stories")
+    public List<StoryDto> fetchAll(@PathVariable Long stageId) {
         return fetch.fetchAll(stageId).stream().map(mapper::toDto).toList();
     }
 
-    @PostMapping
+    @GetMapping("/projects/{projectId}/stories")
+    public List<StoryDto> fetchAll(@PathVariable UUID projectId) {
+        return fetch.fetchAll(projectId).stream().map(mapper::toDto).toList();
+    }
+
+    @PostMapping("/stages/{stageId}/stories")
     @ResponseStatus(CREATED)
-    public StoryDto create(@PathVariable(required = false) Long stageId, @RequestBody @Valid AddStoryDto story) {
+    public StoryDto create(@PathVariable Long stageId, @RequestBody @Valid AddStoryDto story) {
         Story created = create.create(stageId, mapper.toDomain(story));
         return mapper.toDto(created);
     }
 
-    @PutMapping("/{storyId}")
-    public StoryDto update(@PathVariable(required = false) Long stageId, @PathVariable(required = false) Long storyId,
-            @RequestBody AddStoryDto story) {
+    @PostMapping("/projects/{projectId}/stories")
+    @ResponseStatus(CREATED)
+    public StoryDto create(@PathVariable UUID projectId, @RequestBody @Valid AddStoryDto story) {
+        Story created = create.create(projectId, mapper.toDomain(story));
+        return mapper.toDto(created);
+    }
+
+    @PutMapping("/stages/{stageId}/stories/{storyId}")
+    public StoryDto update(@PathVariable Long stageId, @PathVariable Long storyId, @RequestBody AddStoryDto story) {
         Story updated = update.update(stageId, storyId, mapper.toDomain(story));
         return mapper.toDto(updated);
     }
 
-    @PatchMapping("/{storyId}/stage")
-    public StoryDto update(@PathVariable(required = false) Long stageId, @PathVariable(required = false) Long storyId,
+    @PutMapping("/projects/{projectId}/stories/{storyId}")
+    public StoryDto update(@PathVariable UUID projectId, @PathVariable Long storyId, @RequestBody AddStoryDto story) {
+        Story updated = update.update(projectId, storyId, mapper.toDomain(story));
+        return mapper.toDto(updated);
+    }
+
+    @PatchMapping("/stages/{stageId}/stories/{storyId}/stage")
+    public StoryDto update(@PathVariable Long stageId, @PathVariable Long storyId,
             @RequestBody ChangeStoryStageDto story) {
         Story updated = updateStage.update(stageId, storyId, story.stageId());
         return mapper.toDto(updated);
     }
 
-    @DeleteMapping("/{storyId}")
+    @PatchMapping("/projects/{projectId}/stories/{storyId}/stage")
+    public StoryDto update(@PathVariable UUID projectId, @PathVariable Long storyId,
+            @RequestBody ChangeStoryStageDto story) {
+        Story updated = updateStage.update(projectId, storyId, story.stageId());
+        return mapper.toDto(updated);
+    }
+
+    @DeleteMapping("/stages/{stageId}/stories/{storyId}")
     @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable(required = false) Long stageId, @PathVariable(required = false) Long storyId) {
+    public void delete(@PathVariable Long stageId, @PathVariable Long storyId) {
         delete.delete(stageId, storyId);
+    }
+
+    @DeleteMapping("/projects/{projectId}/stories/{storyId}")
+    @ResponseStatus(NO_CONTENT)
+    public void delete(@PathVariable UUID projectId, @PathVariable Long storyId) {
+        delete.delete(projectId, storyId);
     }
 }

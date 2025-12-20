@@ -31,6 +31,8 @@ public class Story {
 
     private Long stageId;
 
+    private UUID projectId;
+
     private UUID productOwnerId;
 
     private UUID developerId;

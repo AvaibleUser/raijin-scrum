@@ -15,11 +15,13 @@ import edu.raijin.scrum.story.infrastructure.adapter.out.persistence.entity.Stor
 public interface StoryEntityMapper {
 
     @Mapping(target = "stageId", source = "stage.id")
+    @Mapping(target = "projectId", source = "project.id")
     @Mapping(target = "productOwnerId", source = "productOwner.id")
     @Mapping(target = "developerId", source = "developer.id")
     Story toDomain(StoriesEntity entity);
 
     @Mapping(target = "stage.id", source = "stageId")
+    @Mapping(target = "project.id", source = "projectId")
     @Mapping(target = "productOwner.id", source = "productOwnerId")
     @Mapping(target = "developer.id", source = "developerId")
     StoriesEntity toEntity(Story story);

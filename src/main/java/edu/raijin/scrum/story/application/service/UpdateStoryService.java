@@ -1,6 +1,9 @@
 package edu.raijin.scrum.story.application.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.raijin.commons.util.exception.ValueNotFoundException;
 import edu.raijin.scrum.story.domain.model.Story;
@@ -15,6 +18,7 @@ public class UpdateStoryService implements UpdateStoryUseCase {
     private final UpdateStoryPort update;
 
     @Override
+    @Transactional
     public Story update(Long stageId, Long storyId, Story story) {
         Story updated = update.findByIdAndStageId(storyId, stageId)
                 .orElseThrow(() -> new ValueNotFoundException("La historia no se encuentra registrado"));
@@ -23,5 +27,11 @@ public class UpdateStoryService implements UpdateStoryUseCase {
         updated.checkValidRegistration();
 
         return update.update(updated);
+    }
+
+    @Override
+    @Transactional
+    public Story update(UUID projectId, Long storyId, Story story) {
+        return update((Long) null, storyId, story);
     }
 }

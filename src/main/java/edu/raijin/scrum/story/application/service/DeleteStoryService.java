@@ -1,6 +1,9 @@
 package edu.raijin.scrum.story.application.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.raijin.commons.util.exception.ValueNotFoundException;
 import edu.raijin.scrum.story.domain.model.Story;
@@ -15,11 +18,18 @@ public class DeleteStoryService implements DeleteStoryUseCase {
     private final UpdateStoryPort update;
 
     @Override
+    @Transactional
     public void delete(Long stageId, Long storyId) {
         Story story = update.findByIdAndStageId(storyId, stageId)
                 .orElseThrow(() -> new ValueNotFoundException("La historia no se encuentra registrado"));
 
         story.delete();
         update.update(story);
+    }
+
+    @Override
+    @Transactional
+    public void delete(UUID projectId, Long storyId) {
+        delete((Long) null, storyId);
     }
 }

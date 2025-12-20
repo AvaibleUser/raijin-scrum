@@ -7,6 +7,7 @@ import edu.raijin.commons.domain.type.StoryPriority;
 public record StoryDto(
         Long id,
         Long stageId,
+        UUID projectId,
         UUID productOwnerId,
         UUID developerId,
         String name,

@@ -42,6 +42,8 @@ RUN $JAVA_HOME/bin/jlink \
 
 FROM debian:12-slim
 
+RUN apt-get update && apt-get install -y curl
+
 ARG OWNER=raijin
 ENV JAVA_HOME=/opt/java/openjdk
 ENV PATH="${JAVA_HOME}/bin:${PATH}"

@@ -42,9 +42,9 @@ public class UserKafkaConsumerAdapter {
     public void consumeUserEvent(@Payload UserEvent event, @Header(RECEIVED_KEY) String key) {
         User user = mapper.toDomain(event);
         switch (key) {
-            case "created" -> consumeCreatedUser(user);
-            case "updated" -> consumeUpdatedUser(user);
-            case "deleted" -> consumeDeletedUser(user);
+            case "create" -> consumeCreatedUser(user);
+            case "update" -> consumeUpdatedUser(user);
+            case "delete" -> consumeDeletedUser(user);
         }
     }
 }

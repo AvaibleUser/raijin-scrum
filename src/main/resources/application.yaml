@@ -43,6 +43,11 @@ spring:
 
     consumer:
       value-deserializer: org.springframework.kafka.support.serializer.JacksonJsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: edu.raijin.commons.infrastructure.adapter.messaging.event.*
 
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JacksonJsonSerializer

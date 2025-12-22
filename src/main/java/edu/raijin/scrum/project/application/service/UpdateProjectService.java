@@ -3,6 +3,7 @@ package edu.raijin.scrum.project.application.service;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.raijin.commons.util.exception.ValueNotFoundException;
 import edu.raijin.scrum.project.domain.model.Project;
@@ -19,6 +20,7 @@ public class UpdateProjectService implements UpdateProjectUseCase {
     private final UpdatedProjectPublisherPort eventPublisher;
 
     @Override
+    @Transactional
     public Project update(UUID projectId, Project update) {
         Project project = updateProject.findById(projectId)
                 .orElseThrow(() -> new ValueNotFoundException("El proyecto no existe"));

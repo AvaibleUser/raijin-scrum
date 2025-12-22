@@ -55,10 +55,15 @@ public class User {
         requireNonNull(color, () -> new BadRequestException("El color es requerido"));
     }
 
-    public void update(User updated) {
+    public void updateFrom(User updated) {
         this.firstName = firstNonNull(updated.firstName, firstName);
         this.lastName = firstNonNull(updated.lastName, lastName);
         this.role = firstNonNull(updated.role, role);
         this.color = firstNonNull(updated.color, color);
+    }
+
+    public void delete() {
+        this.deleted = true;
+        this.deletedAt = Instant.now();
     }
 }

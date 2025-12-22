@@ -3,6 +3,7 @@ package edu.raijin.scrum.project.application.service;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.raijin.scrum.project.domain.model.Project;
 import edu.raijin.scrum.project.domain.port.messaging.CreatedProjectPublisherPort;
@@ -18,6 +19,7 @@ public class CreateProjectService implements CreateProjectUseCase {
     private final CreatedProjectPublisherPort eventPublisher;
 
     @Override
+    @Transactional
     public UUID create(Project project) {
         project.checkValidRegistration();
 

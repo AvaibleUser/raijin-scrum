@@ -3,9 +3,10 @@ package edu.raijin.scrum.project.application.service;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.raijin.scrum.project.domain.model.Project;
-import edu.raijin.scrum.project.domain.port.messaging.UpdatedProjectPublisherPort;
+import edu.raijin.scrum.project.domain.port.messaging.DeletedProjectPublisherPort;
 import edu.raijin.scrum.project.domain.port.persistence.UpdateProjectPort;
 import edu.raijin.scrum.project.domain.usecase.DeleteProjectUseCase;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +16,10 @@ import lombok.RequiredArgsConstructor;
 public class DeleteProjectService implements DeleteProjectUseCase {
 
     private final UpdateProjectPort updateProject;
-    private final UpdatedProjectPublisherPort eventPublisher;
+    private final DeletedProjectPublisherPort eventPublisher;
 
     @Override
+    @Transactional
     public void delete(UUID projectId) {
         Project project = updateProject.findById(projectId).orElse(null);
         if (project == null) {
@@ -27,6 +29,6 @@ public class DeleteProjectService implements DeleteProjectUseCase {
         project.delete();
         updateProject.update(project);
 
-        eventPublisher.publishUpdatedProject(project);
+        eventPublisher.publishDeletedProject(project);
     }
 }

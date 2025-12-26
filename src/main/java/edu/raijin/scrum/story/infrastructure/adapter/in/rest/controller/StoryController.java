@@ -67,26 +67,26 @@ public class StoryController {
     }
 
     @PutMapping("/stages/{stageId}/stories/{storyId}")
-    public StoryDto update(@PathVariable Long stageId, @PathVariable Long storyId, @RequestBody AddStoryDto story) {
+    public StoryDto update(@PathVariable Long stageId, @PathVariable UUID storyId, @RequestBody AddStoryDto story) {
         Story updated = update.update(stageId, storyId, mapper.toDomain(story));
         return mapper.toDto(updated);
     }
 
     @PutMapping("/projects/{projectId}/stories/{storyId}")
-    public StoryDto update(@PathVariable UUID projectId, @PathVariable Long storyId, @RequestBody AddStoryDto story) {
+    public StoryDto update(@PathVariable UUID projectId, @PathVariable UUID storyId, @RequestBody AddStoryDto story) {
         Story updated = update.update(projectId, storyId, mapper.toDomain(story));
         return mapper.toDto(updated);
     }
 
     @PatchMapping("/stages/{stageId}/stories/{storyId}/stage")
-    public StoryDto update(@PathVariable Long stageId, @PathVariable Long storyId,
+    public StoryDto update(@PathVariable Long stageId, @PathVariable UUID storyId,
             @RequestBody ChangeStoryStageDto story) {
         Story updated = updateStage.update(stageId, storyId, story.stageId());
         return mapper.toDto(updated);
     }
 
     @PatchMapping("/projects/{projectId}/stories/{storyId}/stage")
-    public StoryDto update(@PathVariable UUID projectId, @PathVariable Long storyId,
+    public StoryDto update(@PathVariable UUID projectId, @PathVariable UUID storyId,
             @RequestBody ChangeStoryStageDto story) {
         Story updated = updateStage.update(projectId, storyId, story.stageId());
         return mapper.toDto(updated);
@@ -94,13 +94,13 @@ public class StoryController {
 
     @DeleteMapping("/stages/{stageId}/stories/{storyId}")
     @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable Long stageId, @PathVariable Long storyId) {
+    public void delete(@PathVariable Long stageId, @PathVariable UUID storyId) {
         delete.delete(stageId, storyId);
     }
 
     @DeleteMapping("/projects/{projectId}/stories/{storyId}")
     @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable UUID projectId, @PathVariable Long storyId) {
+    public void delete(@PathVariable UUID projectId, @PathVariable UUID storyId) {
         delete.delete(projectId, storyId);
     }
 }

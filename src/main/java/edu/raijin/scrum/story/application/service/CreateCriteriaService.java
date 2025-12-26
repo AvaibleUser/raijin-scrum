@@ -1,5 +1,7 @@
 package edu.raijin.scrum.story.application.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import edu.raijin.commons.util.exception.ValueNotFoundException;
@@ -15,7 +17,7 @@ public class CreateCriteriaService implements CreateCriteriaUseCase {
     private final RegisterCriteriaPort register;
 
     @Override
-    public Criteria create(Long storyId, Criteria criteria) {
+    public Criteria create(UUID storyId, Criteria criteria) {
         if (!register.existsStory(storyId)) {
             throw new ValueNotFoundException("La historia no se encuentra registrado");
         }

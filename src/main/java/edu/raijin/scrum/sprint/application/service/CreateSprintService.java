@@ -24,7 +24,7 @@ public class CreateSprintService implements CreateSprintUseCase {
     private final CreateStageUseCase createStage;
     private final CreatedSprintPublisherPort eventPublisher;
 
-    private Stage getDefaultStage(Long sprintId) {
+    private Stage getDefaultStage(UUID sprintId) {
         return Stage.builder()
                 .sprintId(sprintId)
                 .name("Pendientes")
@@ -34,7 +34,7 @@ public class CreateSprintService implements CreateSprintUseCase {
                 .build();
     }
 
-    private Stage getInDevelopmentStage(Long sprintId) {
+    private Stage getInDevelopmentStage(UUID sprintId) {
         return Stage.builder()
                 .sprintId(sprintId)
                 .name("En desarrollo")
@@ -44,7 +44,7 @@ public class CreateSprintService implements CreateSprintUseCase {
                 .build();
     }
 
-    private Stage getDoneStage(Long sprintId) {
+    private Stage getDoneStage(UUID sprintId) {
         return Stage.builder()
                 .sprintId(sprintId)
                 .name("Finalizadas")
@@ -66,7 +66,7 @@ public class CreateSprintService implements CreateSprintUseCase {
         sprint.checkValidRegistration();
 
         Sprint created = registerSprint.create(projectId, sprint);
-        Long id = created.getId();
+        UUID id = created.getId();
 
         createStage.create(id, getDefaultStage(id));
         createStage.create(id, getInDevelopmentStage(id));

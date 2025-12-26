@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang3.ObjectUtils.firstNonNull;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import edu.raijin.commons.util.exception.BadRequestException;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ public class Criteria {
 
     private Long id;
 
-    private Long storyId;
+    private UUID storyId;
 
     private String description;
 

@@ -1,6 +1,7 @@
 package edu.raijin.scrum.story.application.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class FetchCriteriaService implements FetchCriteriaUseCase {
     private final FindCriteriaPort find;
 
     @Override
-    public List<Criteria> fetchAll(Long storyId) {
+    public List<Criteria> fetchAll(UUID storyId) {
         return find.findAll(storyId);
     }
 }

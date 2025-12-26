@@ -1,6 +1,7 @@
 package edu.raijin.scrum.sprint.application.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class FetchStageService implements FetchStagesUseCase {
     private final FindStagePort find;
 
     @Override
-    public List<Stage> fetchAll(Long sprintId) {
+    public List<Stage> fetchAll(UUID sprintId) {
         return find.findAll(sprintId);
     }
 }

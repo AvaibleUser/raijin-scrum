@@ -1,5 +1,7 @@
 package edu.raijin.scrum.sprint.application.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +20,7 @@ public class CreateStageService implements CreateStageUseCase {
 
     @Override
     @Transactional
-    public Stage create(Long sprintId, Stage stage) {
+    public Stage create(UUID sprintId, Stage stage) {
         if (!register.existsSprint(sprintId)) {
             throw new ValueNotFoundException("El sprint no se encuentra registrado");
         }

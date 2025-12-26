@@ -7,5 +7,5 @@ import edu.raijin.commons.util.annotation.UseCase;
 @UseCase
 public interface DeleteSprintUseCase {
 
-    void delete(UUID projectId, Long sprintId);
+    void delete(UUID projectId, UUID sprintId);
 }

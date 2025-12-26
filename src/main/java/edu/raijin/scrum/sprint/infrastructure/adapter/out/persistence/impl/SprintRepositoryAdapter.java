@@ -49,7 +49,7 @@ public class SprintRepositoryAdapter implements RegisterSprintPort, FindSprintPo
     }
 
     @Override
-    public Optional<Sprint> findByIdAndProjectId(Long id, UUID projectId) {
+    public Optional<Sprint> findByIdAndProjectId(UUID id, UUID projectId) {
         return sprintRepository.findByIdAndProjectId(id, projectId)
                 .map(mapper::toSprint);
     }
@@ -66,7 +66,7 @@ public class SprintRepositoryAdapter implements RegisterSprintPort, FindSprintPo
     }
 
     @Override
-    public boolean existsAnotherActive(UUID projectId, Long sprintId) {
+    public boolean existsAnotherActive(UUID projectId, UUID sprintId) {
         return sprintRepository.existsByActiveAndNotIdAndProjectId(sprintId, projectId);
     }
 }

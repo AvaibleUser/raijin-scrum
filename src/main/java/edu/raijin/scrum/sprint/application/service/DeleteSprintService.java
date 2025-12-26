@@ -19,7 +19,7 @@ public class DeleteSprintService implements DeleteSprintUseCase {
 
     @Override
     @Transactional
-    public void delete(UUID projectId, Long sprintId) {
+    public void delete(UUID projectId, UUID sprintId) {
         Sprint deleted = update.findByIdAndProjectId(sprintId, projectId)
                 .orElseThrow(() -> new ValueNotFoundException("El sprint no se encuentra registrado"));
 

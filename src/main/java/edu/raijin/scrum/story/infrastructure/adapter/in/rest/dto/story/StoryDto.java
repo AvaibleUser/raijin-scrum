@@ -5,7 +5,7 @@ import java.util.UUID;
 import edu.raijin.commons.domain.type.StoryPriority;
 
 public record StoryDto(
-        Long id,
+        UUID id,
         Long stageId,
         UUID projectId,
         UUID productOwnerId,

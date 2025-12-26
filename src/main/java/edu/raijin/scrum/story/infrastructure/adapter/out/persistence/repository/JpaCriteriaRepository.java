@@ -2,6 +2,7 @@ package edu.raijin.scrum.story.infrastructure.adapter.out.persistence.repository
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,7 @@ import edu.raijin.scrum.story.infrastructure.adapter.out.persistence.entity.Crit
 @Repository
 public interface JpaCriteriaRepository extends JpaRepository<CriteriaEntity, Long> {
 
-    Optional<CriteriaEntity> findByIdAndStoryIdAndDeletedFalse(Long id, Long storyId);
+    Optional<CriteriaEntity> findByIdAndStoryIdAndDeletedFalse(Long id, UUID storyId);
 
-    List<CriteriaEntity> findAllByStoryIdAndDeletedFalse(Long storyId);
+    List<CriteriaEntity> findAllByStoryIdAndDeletedFalse(UUID storyId);
 }

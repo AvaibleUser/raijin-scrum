@@ -7,7 +7,7 @@ import edu.raijin.commons.util.annotation.UseCase;
 @UseCase
 public interface DeleteStoryUseCase {
 
-    void delete(Long stageId, Long storyId);
+    void delete(Long stageId, UUID storyId);
 
-    void delete(UUID projectId, Long storyId);
+    void delete(UUID projectId, UUID storyId);
 }

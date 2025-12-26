@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,26 +41,26 @@ public class StageController {
     private final StageDtoMapper mapper;
 
     @GetMapping
-    public List<StageDto> fetchAll(@PathVariable Long sprintId) {
+    public List<StageDto> fetchAll(@PathVariable UUID sprintId) {
         return fetch.fetchAll(sprintId).stream().map(mapper::toDto).toList();
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public StageDto create(@PathVariable Long sprintId, @RequestBody @Valid AddStageDto stage) {
+    public StageDto create(@PathVariable UUID sprintId, @RequestBody @Valid AddStageDto stage) {
         Stage created = create.create(sprintId, mapper.toDomain(stage));
         return mapper.toDto(created);
     }
 
     @PutMapping("/{stageId}")
-    public StageDto update(@PathVariable Long sprintId, @PathVariable Long stageId, @RequestBody AddStageDto stage) {
+    public StageDto update(@PathVariable UUID sprintId, @PathVariable Long stageId, @RequestBody AddStageDto stage) {
         Stage updated = update.update(sprintId, stageId, mapper.toDomain(stage));
         return mapper.toDto(updated);
     }
 
     @DeleteMapping("/{stageId}")
     @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable Long sprintId, @PathVariable Long stageId) {
+    public void delete(@PathVariable UUID sprintId, @PathVariable Long stageId) {
         delete.delete(sprintId, stageId);
     }
 }

@@ -2,6 +2,7 @@ package edu.raijin.scrum.story.infrastructure.adapter.out.persistence.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
@@ -27,7 +28,7 @@ public class CriteriaRepository implements RegisterCriteriaPort, FindCriteriaPor
     private final CriteriaEntityMapper mapper;
 
     @Override
-    public Optional<Criteria> findByIdAndStoryId(Long criteriaId, Long storyId) {
+    public Optional<Criteria> findByIdAndStoryId(Long criteriaId, UUID storyId) {
         return criteriaRepository.findByIdAndStoryIdAndDeletedFalse(criteriaId, storyId).map(mapper::toDomain);
     }
 
@@ -38,18 +39,18 @@ public class CriteriaRepository implements RegisterCriteriaPort, FindCriteriaPor
     }
 
     @Override
-    public List<Criteria> findAll(Long storyId) {
+    public List<Criteria> findAll(UUID storyId) {
         List<CriteriaEntity> criteria = criteriaRepository.findAllByStoryIdAndDeletedFalse(storyId);
         return criteria.stream().map(mapper::toDomain).toList();
     }
 
     @Override
-    public boolean existsStory(Long storyId) {
+    public boolean existsStory(UUID storyId) {
         return storyRepository.existsByIdAndDeletedFalse(storyId);
     }
 
     @Override
-    public Criteria create(Long storyId, Criteria criteria) {
+    public Criteria create(UUID storyId, Criteria criteria) {
         StoriesEntity story = storyRepository.findById(storyId).get();
         CriteriaEntity entity = mapper.toEntity(criteria).withStory(story);
         return mapper.toDomain(criteriaRepository.save(entity));

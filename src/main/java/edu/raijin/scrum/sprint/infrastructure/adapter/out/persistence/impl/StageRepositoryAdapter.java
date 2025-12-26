@@ -2,6 +2,7 @@ package edu.raijin.scrum.sprint.infrastructure.adapter.out.persistence.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
@@ -27,7 +28,7 @@ public class StageRepositoryAdapter implements RegisterStagePort, FindStagePort,
     private final StageEntityMapper mapper;
 
     @Override
-    public Optional<Stage> findBySprintIdAndId(Long sprintId, Long stageId) {
+    public Optional<Stage> findBySprintIdAndId(UUID sprintId, Long stageId) {
         return stageRepository.findByIdAndSprintIdAndDeletedFalse(stageId, sprintId).map(mapper::toDomain);
     }
 
@@ -38,30 +39,30 @@ public class StageRepositoryAdapter implements RegisterStagePort, FindStagePort,
     }
 
     @Override
-    public List<Stage> findAll(Long sprintId) {
+    public List<Stage> findAll(UUID sprintId) {
         List<StagesEntity> stages = stageRepository.findBySprintIdAndDeletedFalse(sprintId);
         return stages.stream().map(mapper::toDomain).toList();
     }
 
     @Override
-    public boolean existsSprint(Long sprintId) {
+    public boolean existsSprint(UUID sprintId) {
         return sprintRepository.existsByIdAndDeletedFalse(sprintId);
     }
 
     @Override
-    public Stage create(Long sprintId, Stage stage) {
+    public Stage create(UUID sprintId, Stage stage) {
         SprintsEntity entity = sprintRepository.findById(sprintId).get();
         StagesEntity stageEntity = mapper.toEntity(stage).withSprint(entity);
         return mapper.toDomain(stageRepository.save(stageEntity));
     }
 
     @Override
-    public boolean existsDefault(Long sprintId) {
+    public boolean existsDefault(UUID sprintId) {
         return stageRepository.existsBySprintIdAndIsDefaultTrue(sprintId);
     }
 
     @Override
-    public boolean existsAnotherDefault(Long sprintId, Long stageId) {
+    public boolean existsAnotherDefault(UUID sprintId, Long stageId) {
         return stageRepository.existsByIdNotAndSprintIdAndIsDefaultTrue(stageId, sprintId);
     }
 }

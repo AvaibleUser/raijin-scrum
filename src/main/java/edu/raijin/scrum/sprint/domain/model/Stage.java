@@ -7,6 +7,7 @@ import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang3.ObjectUtils.firstNonNull;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import edu.raijin.commons.util.exception.BadRequestException;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ public class Stage {
 
     private Long id;
 
-    private Long sprintId;
+    private UUID sprintId;
 
     private String name;
 

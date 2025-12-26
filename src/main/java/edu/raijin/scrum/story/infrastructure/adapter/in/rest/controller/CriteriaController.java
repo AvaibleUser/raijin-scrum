@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,19 +41,19 @@ public class CriteriaController {
     private final CriteriaDtoMapper mapper;
 
     @GetMapping
-    public List<CriteriaDto> fetchAll(@PathVariable Long storyId) {
+    public List<CriteriaDto> fetchAll(@PathVariable UUID storyId) {
         return fetch.fetchAll(storyId).stream().map(mapper::toDto).toList();
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public CriteriaDto create(@PathVariable Long storyId, @RequestBody @Valid AddCriteriaDto criteria) {
+    public CriteriaDto create(@PathVariable UUID storyId, @RequestBody @Valid AddCriteriaDto criteria) {
         Criteria created = create.create(storyId, mapper.toDomain(criteria));
         return mapper.toDto(created);
     }
 
     @PutMapping("/{criteriaId}")
-    public CriteriaDto update(@PathVariable Long storyId, @PathVariable Long criteriaId,
+    public CriteriaDto update(@PathVariable UUID storyId, @PathVariable Long criteriaId,
             @RequestBody AddCriteriaDto criteria) {
         Criteria updated = update.update(storyId, criteriaId, mapper.toDomain(criteria));
         return mapper.toDto(updated);
@@ -60,7 +61,7 @@ public class CriteriaController {
 
     @DeleteMapping("/{criteriaId}")
     @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable Long storyId, @PathVariable Long criteriaId) {
+    public void delete(@PathVariable UUID storyId, @PathVariable Long criteriaId) {
         delete.delete(storyId, criteriaId);
     }
 }

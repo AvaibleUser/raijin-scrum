@@ -40,7 +40,7 @@ public class StoryRepositoryAdapter implements RegisterStoryPort, FindStoryPort,
     }
 
     @Override
-    public Optional<Story> findByIdAndStageId(Long storyId, Long stageId) {
+    public Optional<Story> findByIdAndStageId(UUID storyId, Long stageId) {
         return storyRepository.findByIdAndStageIdAndDeletedFalse(storyId, stageId).map(mapper::toDomain);
     }
 
@@ -54,8 +54,8 @@ public class StoryRepositoryAdapter implements RegisterStoryPort, FindStoryPort,
     }
 
     @Override
-    public List<Story> findAll(Long storyId) {
-        List<StoriesEntity> stories = storyRepository.findByStageIdAndDeletedFalse(storyId);
+    public List<Story> findAll(Long stageId) {
+        List<StoriesEntity> stories = storyRepository.findByStageIdAndDeletedFalse(stageId);
         return stories.stream().map(mapper::toDomain).toList();
     }
 

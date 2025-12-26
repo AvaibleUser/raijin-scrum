@@ -12,7 +12,7 @@ import edu.raijin.commons.domain.type.SprintStatus;
 import edu.raijin.scrum.sprint.infrastructure.adapter.out.persistence.entity.SprintsEntity;
 
 @Repository
-public interface JpaSprintRepository extends JpaRepository<SprintsEntity, Long> {
+public interface JpaSprintRepository extends JpaRepository<SprintsEntity, UUID> {
 
     boolean existsByProjectIdAndStatusNotAndDeletedFalse(UUID projectId, SprintStatus status);
 
@@ -20,17 +20,17 @@ public interface JpaSprintRepository extends JpaRepository<SprintsEntity, Long> 
 
     boolean existsByStatusAndDeletedFalseAndProjectId(SprintStatus status, UUID projectId);
 
-    boolean existsByStatusAndDeletedFalseAndIdNotAndProjectId(SprintStatus status, Long id, UUID projectId);
+    boolean existsByStatusAndDeletedFalseAndIdNotAndProjectId(SprintStatus status, UUID id, UUID projectId);
 
-    boolean existsByIdAndDeletedFalse(Long id);
+    boolean existsByIdAndDeletedFalse(UUID id);
 
-    Optional<SprintsEntity> findByIdAndProjectId(Long id, UUID projectId);
+    Optional<SprintsEntity> findByIdAndProjectId(UUID id, UUID projectId);
 
     default boolean existsByActiveAndProjectId(UUID projectId) {
         return existsByStatusAndDeletedFalseAndProjectId(SprintStatus.ACTIVE, projectId);
     }
 
-    default boolean existsByActiveAndNotIdAndProjectId(Long id, UUID projectId) {
+    default boolean existsByActiveAndNotIdAndProjectId(UUID id, UUID projectId) {
         return existsByStatusAndDeletedFalseAndIdNotAndProjectId(SprintStatus.ACTIVE, id, projectId);
     }
 

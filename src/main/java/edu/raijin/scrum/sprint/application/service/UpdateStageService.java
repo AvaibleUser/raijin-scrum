@@ -1,5 +1,7 @@
 package edu.raijin.scrum.sprint.application.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +20,7 @@ public class UpdateStageService implements UpdateStageUseCase {
 
     @Override
     @Transactional
-    public Stage update(Long sprintId, Long stageId, Stage stage) {
+    public Stage update(UUID sprintId, Long stageId, Stage stage) {
         Stage updated = update.findBySprintIdAndId(sprintId, stageId)
                 .orElseThrow(() -> new ValueNotFoundException("El stage no se encuentra registrado"));
 

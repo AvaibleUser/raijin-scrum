@@ -27,7 +27,7 @@ import lombok.With;
 @AllArgsConstructor(access = PRIVATE)
 public class Story {
 
-    private Long id;
+    private UUID id;
 
     private Long stageId;
 

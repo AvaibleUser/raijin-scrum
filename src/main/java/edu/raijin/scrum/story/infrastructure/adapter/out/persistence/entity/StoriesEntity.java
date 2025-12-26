@@ -1,10 +1,11 @@
 package edu.raijin.scrum.story.infrastructure.adapter.out.persistence.entity;
 
 import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.GenerationType.IDENTITY;
+import static jakarta.persistence.GenerationType.UUID;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -38,8 +39,8 @@ import lombok.With;
 public class StoriesEntity {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = UUID)
+    private UUID id;
 
     @With
     @ManyToOne

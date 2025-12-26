@@ -11,5 +11,5 @@ public interface FindStoryPort {
 
     List<Story> findAll(UUID projectId);
 
-    List<Story> findAll(Long storyId);
+    List<Story> findAll(Long stageId);
 }

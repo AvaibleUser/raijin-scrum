@@ -19,7 +19,7 @@ public class UpdateStoryStageService implements UpdateStoryStageUseCase {
 
     @Override
     @Transactional
-    public Story update(Long stageId, Long storyId, Long newStageId) {
+    public Story update(Long stageId, UUID storyId, Long newStageId) {
         Story updated = update.findByIdAndStageId(storyId, stageId)
                 .orElseThrow(() -> new ValueNotFoundException("La historia no se encuentra registrada"));
 
@@ -31,7 +31,7 @@ public class UpdateStoryStageService implements UpdateStoryStageUseCase {
 
     @Override
     @Transactional
-    public Story update(UUID projectId, Long storyId, Long newStageId) {
+    public Story update(UUID projectId, UUID storyId, Long newStageId) {
         return update((Long) null, storyId, newStageId);
     }
 }

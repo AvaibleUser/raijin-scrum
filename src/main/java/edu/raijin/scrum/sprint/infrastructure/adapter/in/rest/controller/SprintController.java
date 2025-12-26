@@ -55,7 +55,7 @@ public class SprintController {
     }
 
     @PutMapping("/{sprintId}")
-    public SprintDto update(@PathVariable UUID projectId, @PathVariable Long sprintId,
+    public SprintDto update(@PathVariable UUID projectId, @PathVariable UUID sprintId,
             @RequestBody @Valid UpdateSprintDto sprint) {
         Sprint updated = update.update(projectId, sprintId, mapper.toDomain(sprint));
         return mapper.toDto(updated);
@@ -63,7 +63,7 @@ public class SprintController {
 
     @DeleteMapping("/{sprintId}")
     @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable UUID projectId, @PathVariable Long sprintId) {
+    public void delete(@PathVariable UUID projectId, @PathVariable UUID sprintId) {
         delete.delete(projectId, sprintId);
     }
 }

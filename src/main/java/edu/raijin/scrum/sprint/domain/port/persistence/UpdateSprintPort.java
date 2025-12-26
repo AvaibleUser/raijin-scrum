@@ -9,9 +9,9 @@ import edu.raijin.scrum.sprint.domain.model.Sprint;
 @Port
 public interface UpdateSprintPort {
 
-    boolean existsAnotherActive(UUID projectId, Long sprintId);
+    boolean existsAnotherActive(UUID projectId, UUID sprintId);
 
-    Optional<Sprint> findByIdAndProjectId(Long id, UUID projectId);
+    Optional<Sprint> findByIdAndProjectId(UUID id, UUID projectId);
 
     Sprint update(Sprint sprint);
 }

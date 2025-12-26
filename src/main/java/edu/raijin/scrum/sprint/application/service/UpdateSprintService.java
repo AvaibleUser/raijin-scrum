@@ -21,7 +21,7 @@ public class UpdateSprintService implements UpdateSprintUseCase {
 
     @Override
     @Transactional
-    public Sprint update(UUID projectId, Long sprintId, Sprint sprint) {
+    public Sprint update(UUID projectId, UUID sprintId, Sprint sprint) {
         Sprint updated = update.findByIdAndProjectId(sprintId, projectId)
                 .orElseThrow(() -> new ValueNotFoundException("El sprint no se encuentra registrado"));
 

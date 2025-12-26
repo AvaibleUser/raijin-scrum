@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 import edu.raijin.scrum.story.infrastructure.adapter.out.persistence.entity.StoriesEntity;
 
 @Repository
-public interface JpaStoryRepository extends JpaRepository<StoriesEntity, Long> {
+public interface JpaStoryRepository extends JpaRepository<StoriesEntity, UUID> {
 
-    boolean existsByIdAndDeletedFalse(Long id);
+    boolean existsByIdAndDeletedFalse(UUID id);
 
-    Optional<StoriesEntity> findByIdAndStageIdAndDeletedFalse(Long id, Long stageId);
+    Optional<StoriesEntity> findByIdAndStageIdAndDeletedFalse(UUID id, Long stageId);
 
     List<StoriesEntity> findByStageIdAndDeletedFalse(Long stageId);
 

@@ -8,7 +8,7 @@ import edu.raijin.scrum.story.domain.model.Story;
 @UseCase
 public interface UpdateStoryStageUseCase {
 
-    Story update(Long stageId, Long storyId, Long newStageId);
+    Story update(Long stageId, UUID storyId, Long newStageId);
 
-    Story update(UUID projectId, Long storyId, Long newStageId);
+    Story update(UUID projectId, UUID storyId, Long newStageId);
 }

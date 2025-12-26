@@ -27,7 +27,7 @@ import lombok.With;
 @AllArgsConstructor(access = PRIVATE)
 public class Sprint {
 
-    private Long id;
+    private UUID id;
 
     private UUID projectId;
 

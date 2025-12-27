@@ -12,6 +12,11 @@ logging:
         data:
           rest: debug
 
+      kafka:
+        clients:
+          producer: debug
+          consumer: debug
+
 spring:
   application:
     name: scrum

@@ -1,8 +1,10 @@
 package edu.raijin.scrum.project.infrastructure.adapter.out.persistence.entity;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,6 +13,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -55,4 +58,7 @@ public class UsersEntity {
     private Instant updatedAt;
 
     private Instant deletedAt;
+
+    @ManyToMany(mappedBy = "members", fetch = LAZY)
+    private List<ProjectsEntity> projects;
 }

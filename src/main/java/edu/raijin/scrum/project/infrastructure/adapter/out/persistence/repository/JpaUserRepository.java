@@ -17,6 +17,8 @@ public interface JpaUserRepository extends JpaRepository<UsersEntity, UUID> {
 
     Page<UsersEntity> findByDeletedFalse(Pageable request);
 
+    Page<UsersEntity> findByProjectsIdAndDeletedFalse(UUID projectId, Pageable request);
+
     boolean existsByEmailAndDeletedFalse(String email);
 
     boolean existsByIdAndDeletedFalse(UUID id);

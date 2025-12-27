@@ -47,7 +47,7 @@ public class UserRepositoryAdapter implements RegisterUserPort, UpdateUserPort, 
 
     @Override
     public Paged<User> findAll(UUID projectId, Pageable pageable) {
-        Page<UsersEntity> users = userRepository.findByDeletedFalse(pageable);
+        Page<UsersEntity> users = userRepository.findByProjectsIdAndDeletedFalse(projectId, pageable);
         return Paged.from(users.map(mapper::toDomain));
     }
 

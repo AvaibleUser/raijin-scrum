@@ -18,6 +18,8 @@ public interface StoryEntityMapper {
     @Mapping(target = "projectId", source = "project.id")
     @Mapping(target = "productOwnerId", source = "productOwner.id")
     @Mapping(target = "developerId", source = "developer.id")
+    @Mapping(target = "sprintId", source = "stage.sprint.id")
+    @Mapping(target = "stage", source = "stage.name")
     Story toDomain(StoriesEntity entity);
 
     @Mapping(target = "stage.id", source = "stageId")

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.raijin.commons.util.exception.ValueNotFoundException;
 import edu.raijin.scrum.story.domain.model.Story;
+import edu.raijin.scrum.story.domain.port.messaging.UpdatedStoryPublisherPort;
 import edu.raijin.scrum.story.domain.port.persistence.UpdateStoryPort;
 import edu.raijin.scrum.story.domain.usecase.UpdateStoryStageUseCase;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class UpdateStoryStageService implements UpdateStoryStageUseCase {
 
     private final UpdateStoryPort update;
+    private final UpdatedStoryPublisherPort eventPublisher;
 
     @Override
     @Transactional
@@ -26,7 +28,10 @@ public class UpdateStoryStageService implements UpdateStoryStageUseCase {
         updated.setStageId(newStageId);
         updated.checkValidRegistration();
 
-        return update.update(updated);
+        Story saved = update.update(updated);
+
+        eventPublisher.publishUpdatedStory(saved);
+        return saved;
     }
 
     @Override

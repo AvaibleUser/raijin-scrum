@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.raijin.commons.util.exception.ValueNotFoundException;
 import edu.raijin.scrum.sprint.domain.model.Sprint;
+import edu.raijin.scrum.sprint.domain.port.messaging.DeletedSprintPublisherPort;
 import edu.raijin.scrum.sprint.domain.port.persistence.UpdateSprintPort;
 import edu.raijin.scrum.sprint.domain.usecase.DeleteSprintUseCase;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class DeleteSprintService implements DeleteSprintUseCase {
 
     private final UpdateSprintPort update;
+    private final DeletedSprintPublisherPort eventPublisher;
 
     @Override
     @Transactional
@@ -24,6 +26,8 @@ public class DeleteSprintService implements DeleteSprintUseCase {
                 .orElseThrow(() -> new ValueNotFoundException("El sprint no se encuentra registrado"));
 
         deleted.delete();
-        update.update(deleted);
+        Sprint deletedSprint = update.update(deleted);
+
+        eventPublisher.publishDeletedSprint(deletedSprint);
     }
 }

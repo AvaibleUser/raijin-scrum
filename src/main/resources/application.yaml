@@ -64,6 +64,9 @@ security:
 kafka:
   topics:
     project-commands-topic: project-commands
+    sprint-commands-topic: sprint-commands
+    story-commands-topic: story-commands
+    member-commands-topic: member-commands
     user-commands:
       topic: user-commands
       properties: \

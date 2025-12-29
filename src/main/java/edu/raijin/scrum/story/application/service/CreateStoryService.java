@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.raijin.commons.util.exception.ValueNotFoundException;
 import edu.raijin.scrum.story.domain.model.Story;
+import edu.raijin.scrum.story.domain.port.messaging.CreatedStoryPublisherPort;
 import edu.raijin.scrum.story.domain.port.persistence.RegisterStoryPort;
 import edu.raijin.scrum.story.domain.usecase.CreateStoryUseCase;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class CreateStoryService implements CreateStoryUseCase {
 
     private final RegisterStoryPort register;
+    private final CreatedStoryPublisherPort eventPublisher;
 
     @Override
     @Transactional
@@ -32,6 +34,8 @@ public class CreateStoryService implements CreateStoryUseCase {
         story.checkValidRegistration();
 
         Story saved = register.create(stageId, story);
+
+        eventPublisher.publishCreatedStory(saved);
         return saved;
     }
 
@@ -50,6 +54,8 @@ public class CreateStoryService implements CreateStoryUseCase {
         story.checkValidRegistration();
 
         Story saved = register.create(projectId, story);
+
+        eventPublisher.publishCreatedStory(saved);
         return saved;
     }
 }

@@ -9,8 +9,8 @@ import edu.raijin.scrum.project.domain.model.Project;
 import edu.raijin.scrum.project.domain.port.messaging.CreatedProjectPublisherPort;
 import edu.raijin.scrum.project.domain.port.messaging.DeletedProjectPublisherPort;
 import edu.raijin.scrum.project.domain.port.messaging.UpdatedProjectPublisherPort;
-import edu.raijin.scrum.project.infrastructure.adapter.config.property.KafkaTopicsProperty;
 import edu.raijin.scrum.project.infrastructure.adapter.out.messaging.mapper.ProjectEventMapper;
+import edu.raijin.scrum.shared.infrastructure.config.property.KafkaTopicsProperty;
 import lombok.RequiredArgsConstructor;
 
 @Adapter

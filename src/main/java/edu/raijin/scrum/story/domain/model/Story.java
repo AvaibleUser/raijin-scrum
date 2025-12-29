@@ -33,6 +33,8 @@ public class Story {
 
     private UUID projectId;
 
+    private UUID sprintId;
+
     private UUID productOwnerId;
 
     private UUID developerId;
@@ -44,6 +46,8 @@ public class Story {
     private Integer points;
 
     private StoryPriority priority;
+
+    private String stage;
 
     @Builder.Default
     private Boolean deleted = false;

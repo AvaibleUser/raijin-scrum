@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.raijin.commons.util.exception.RequestConflictException;
 import edu.raijin.scrum.project.domain.model.Member;
+import edu.raijin.scrum.project.domain.port.messaging.CreatedMemberPublisherPort;
 import edu.raijin.scrum.project.domain.port.persistence.AddProjectMemberPort;
 import edu.raijin.scrum.project.domain.usecase.AddProjectMemberUseCase;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class AddProjectMemberService implements AddProjectMemberUseCase {
 
     private final AddProjectMemberPort addMember;
+    private final CreatedMemberPublisherPort eventPublisher;
 
     @Override
     @Transactional
@@ -23,5 +25,7 @@ public class AddProjectMemberService implements AddProjectMemberUseCase {
         }
         member.checkValidRegistration();
         addMember.add(member);
+
+        eventPublisher.publishCreatedMember(member);
     }
 }

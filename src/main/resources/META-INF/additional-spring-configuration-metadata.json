@@ -27,6 +27,21 @@
       "description": "The name of the Kafka topic"
     },
     {
+      "name": "kafka.topics.sprint-commands-topic",
+      "type": "java.lang.String",
+      "description": "The name of the Kafka topic"
+    },
+    {
+      "name": "kafka.topics.story-commands-topic",
+      "type": "java.lang.String",
+      "description": "The name of the Kafka topic"
+    },
+    {
+      "name": "kafka.topics.member-commands-topic",
+      "type": "java.lang.String",
+      "description": "The name of the Kafka topic"
+    },
+    {
       "name": "kafka.topics.user-commands.topic",
       "type": "java.lang.String",
       "description": "The name of the Kafka topic"

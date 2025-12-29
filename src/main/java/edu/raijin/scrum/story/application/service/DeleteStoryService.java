@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.raijin.commons.util.exception.ValueNotFoundException;
 import edu.raijin.scrum.story.domain.model.Story;
+import edu.raijin.scrum.story.domain.port.messaging.DeletedStoryPublisherPort;
 import edu.raijin.scrum.story.domain.port.persistence.UpdateStoryPort;
 import edu.raijin.scrum.story.domain.usecase.DeleteStoryUseCase;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class DeleteStoryService implements DeleteStoryUseCase {
 
     private final UpdateStoryPort update;
+    private final DeletedStoryPublisherPort eventPublisher;
 
     @Override
     @Transactional
@@ -24,7 +26,9 @@ public class DeleteStoryService implements DeleteStoryUseCase {
                 .orElseThrow(() -> new ValueNotFoundException("La historia no se encuentra registrado"));
 
         story.delete();
-        update.update(story);
+        Story saved = update.update(story);
+
+        eventPublisher.publishDeletedStory(saved);
     }
 
     @Override

@@ -9,6 +9,7 @@ import edu.raijin.commons.domain.type.SprintStatus;
 import edu.raijin.commons.util.exception.RequestConflictException;
 import edu.raijin.commons.util.exception.ValueNotFoundException;
 import edu.raijin.scrum.sprint.domain.model.Sprint;
+import edu.raijin.scrum.sprint.domain.port.messaging.UpdatedSprintPublisherPort;
 import edu.raijin.scrum.sprint.domain.port.persistence.UpdateSprintPort;
 import edu.raijin.scrum.sprint.domain.usecase.UpdateSprintUseCase;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class UpdateSprintService implements UpdateSprintUseCase {
 
     private final UpdateSprintPort update;
+    private final UpdatedSprintPublisherPort eventPublisher;
 
     @Override
     @Transactional
@@ -32,6 +34,9 @@ public class UpdateSprintService implements UpdateSprintUseCase {
         updated.updateFrom(sprint);
         updated.checkValidRegistration();
 
-        return update.update(updated);
+        Sprint updatedSprint = update.update(updated);
+
+        eventPublisher.publishUpdatedSprint(updatedSprint);
+        return updatedSprint;
     }
 }

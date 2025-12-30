@@ -14,5 +14,7 @@ public interface FindProjectPort {
 
     Optional<Project> findById(UUID id);
 
+    Paged<Project> findAllAssigned(UUID userId, Pageable pageable);
+
     Paged<Project> findAll(Pageable pageable);
 }

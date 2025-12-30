@@ -17,6 +17,8 @@ public interface JpaProjectRepository extends JpaRepository<ProjectsEntity, UUID
 
     Page<ProjectsEntity> findAllByDeletedFalse(Pageable request);
 
+    Page<ProjectsEntity> findAllByMembersIdAndDeletedFalse(UUID userId, Pageable request);
+
     boolean existsByIdAndDeletedFalse(UUID id);
 
     boolean existsByIdAndMembersIdAndDeletedFalse(UUID projectId, UUID userId);

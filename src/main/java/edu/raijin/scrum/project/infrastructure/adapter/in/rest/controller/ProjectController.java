@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.raijin.commons.domain.model.Paged;
 import edu.raijin.commons.infrastructure.adapter.rest.dto.scrum.ProjectDto;
 import edu.raijin.commons.util.annotation.Adapter;
+import edu.raijin.commons.util.annotation.CurrentUser;
 import edu.raijin.scrum.project.domain.model.Project;
 import edu.raijin.scrum.project.domain.usecase.CloseProjectUseCase;
 import edu.raijin.scrum.project.domain.usecase.CreateProjectUseCase;
@@ -48,6 +49,11 @@ public class ProjectController {
 
     @GetMapping
     public Paged<ProjectDto> fetchAll(Pageable pageable) {
+        return fetchAll.fetchAll(pageable).map(mapper::toDto);
+    }
+
+    @GetMapping("/me")
+    public Paged<ProjectDto> fetchAll(@CurrentUser UUID userId, Pageable pageable) {
         return fetchAll.fetchAll(pageable).map(mapper::toDto);
     }
 

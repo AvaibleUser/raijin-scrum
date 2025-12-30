@@ -55,6 +55,13 @@ public class ProjectRepositoryAdapter implements FindProjectPort, RegisterProjec
     }
 
     @Override
+    public Paged<Project> findAllAssigned(UUID userId, Pageable pageable) {
+        Page<Project> projects = projectRepository.findAllByMembersIdAndDeletedFalse(userId, pageable)
+                .map(mapper::toDomain);
+        return Paged.from(projects);
+    }
+
+    @Override
     public Project update(Project project) {
         ProjectsEntity entity = mapper.toEntity(project);
         return mapper.toDomain(projectRepository.save(entity));

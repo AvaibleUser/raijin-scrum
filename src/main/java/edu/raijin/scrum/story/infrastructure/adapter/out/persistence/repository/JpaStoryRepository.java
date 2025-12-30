@@ -19,4 +19,6 @@ public interface JpaStoryRepository extends JpaRepository<StoriesEntity, UUID> {
     List<StoriesEntity> findByStageIdAndDeletedFalse(Long stageId);
 
     List<StoriesEntity> findByProjectIdAndDeletedFalse(UUID projectId);
+
+    List<StoriesEntity> findByStageSprintIdAndDeletedFalse(UUID sprintId);
 }

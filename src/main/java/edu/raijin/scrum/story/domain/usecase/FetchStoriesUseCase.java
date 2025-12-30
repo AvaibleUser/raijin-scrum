@@ -9,6 +9,8 @@ import edu.raijin.scrum.story.domain.model.Story;
 @UseCase
 public interface FetchStoriesUseCase {
 
+    List<Story> fetchAllBySprint(UUID sprintId);
+
     List<Story> fetchAll(UUID projectId);
 
     List<Story> fetchAll(Long stageId);

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.raijin.commons.util.exception.ValueNotFoundException;
+import edu.raijin.scrum.sprint.domain.model.Stage;
+import edu.raijin.scrum.sprint.domain.port.persistence.FindStagePort;
 import edu.raijin.scrum.story.domain.model.Story;
 import edu.raijin.scrum.story.domain.port.messaging.UpdatedStoryPublisherPort;
 import edu.raijin.scrum.story.domain.port.persistence.UpdateStoryPort;
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UpdateStoryStageService implements UpdateStoryStageUseCase {
 
+    private final FindStagePort findStage;
     private final UpdateStoryPort update;
     private final UpdatedStoryPublisherPort eventPublisher;
 
@@ -38,5 +41,14 @@ public class UpdateStoryStageService implements UpdateStoryStageUseCase {
     @Transactional
     public Story update(UUID projectId, UUID storyId, Long newStageId) {
         return update((Long) null, storyId, newStageId);
+    }
+
+    @Override
+    @Transactional
+    public Story update(UUID sprintId, UUID storyId) {
+        Stage stage = findStage.findDefaultBySprint(sprintId)
+                .orElseThrow(() -> new ValueNotFoundException("La columna no se encuentra registrada"));
+
+        return update((Long) null, storyId, stage.getId());
     }
 }

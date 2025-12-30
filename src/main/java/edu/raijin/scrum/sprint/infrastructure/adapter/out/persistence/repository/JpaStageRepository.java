@@ -14,6 +14,8 @@ public interface JpaStageRepository extends JpaRepository<StagesEntity, Long> {
 
     Optional<StagesEntity> findByIdAndSprintIdAndDeletedFalse(Long id, UUID sprintId);
 
+    Optional<StagesEntity> findFirstBySprintIdAndDeletedFalseOrderByIsDefaultDescIdAsc(UUID sprintId);
+
     List<StagesEntity> findBySprintIdAndDeletedFalse(UUID sprintId);
 
     boolean existsByIdAndDeletedFalse(Long id);
@@ -21,4 +23,8 @@ public interface JpaStageRepository extends JpaRepository<StagesEntity, Long> {
     boolean existsBySprintIdAndIsDefaultTrue(UUID sprintId);
 
     boolean existsByIdNotAndSprintIdAndIsDefaultTrue(Long stageId, UUID sprintId);
+
+    default Optional<StagesEntity> findBySprintId(UUID sprintId) {
+        return findFirstBySprintIdAndDeletedFalseOrderByIsDefaultDescIdAsc(sprintId);
+    }
 }

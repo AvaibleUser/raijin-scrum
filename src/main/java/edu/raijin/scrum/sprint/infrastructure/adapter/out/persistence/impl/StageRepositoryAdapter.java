@@ -45,6 +45,11 @@ public class StageRepositoryAdapter implements RegisterStagePort, FindStagePort,
     }
 
     @Override
+    public Optional<Stage> findDefaultBySprint(UUID sprintId) {
+        return stageRepository.findBySprintId(sprintId).map(mapper::toDomain);
+    }
+
+    @Override
     public boolean existsSprint(UUID sprintId) {
         return sprintRepository.existsByIdAndDeletedFalse(sprintId);
     }

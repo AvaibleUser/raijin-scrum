@@ -28,4 +28,9 @@ public class FetchStoriesService implements FetchStoriesUseCase {
     public List<Story> fetchAll(UUID projectId) {
         return find.findAll(projectId);
     }
+
+    @Override
+    public List<Story> fetchAllBySprint(UUID sprintId) {
+        return find.findAllBySprint(sprintId);
+    }
 }

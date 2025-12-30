@@ -66,6 +66,12 @@ public class StoryRepositoryAdapter implements RegisterStoryPort, FindStoryPort,
     }
 
     @Override
+    public List<Story> findAllBySprint(UUID sprintId) {
+        List<StoriesEntity> stories = storyRepository.findByStageSprintIdAndDeletedFalse(sprintId);
+        return stories.stream().map(mapper::toDomain).toList();
+    }
+
+    @Override
     public boolean existsUser(UUID id) {
         return userRepository.existsByIdAndDeletedFalse(id);
     }

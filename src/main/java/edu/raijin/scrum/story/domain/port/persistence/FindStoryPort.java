@@ -9,6 +9,8 @@ import edu.raijin.scrum.story.domain.model.Story;
 @Port
 public interface FindStoryPort {
 
+    List<Story> findAllBySprint(UUID sprintId);
+
     List<Story> findAll(UUID projectId);
 
     List<Story> findAll(Long stageId);

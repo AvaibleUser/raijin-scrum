@@ -11,4 +11,6 @@ public interface UpdateStoryStageUseCase {
     Story update(Long stageId, UUID storyId, Long newStageId);
 
     Story update(UUID projectId, UUID storyId, Long newStageId);
+
+    Story update(UUID sprintId, UUID storyId);
 }

@@ -24,6 +24,7 @@ import edu.raijin.scrum.story.domain.usecase.FetchStoriesUseCase;
 import edu.raijin.scrum.story.domain.usecase.UpdateStoryStageUseCase;
 import edu.raijin.scrum.story.domain.usecase.UpdateStoryUseCase;
 import edu.raijin.scrum.story.infrastructure.adapter.in.rest.dto.story.AddStoryDto;
+import edu.raijin.scrum.story.infrastructure.adapter.in.rest.dto.story.ChangeStorySprintDto;
 import edu.raijin.scrum.story.infrastructure.adapter.in.rest.dto.story.ChangeStoryStageDto;
 import edu.raijin.scrum.story.infrastructure.adapter.in.rest.dto.story.StoryDto;
 import edu.raijin.scrum.story.infrastructure.adapter.in.rest.mapper.StoryDtoMapper;
@@ -50,6 +51,11 @@ public class StoryController {
     @GetMapping("/projects/{projectId}/stories")
     public List<StoryDto> fetchAll(@PathVariable UUID projectId) {
         return fetch.fetchAll(projectId).stream().map(mapper::toDto).toList();
+    }
+
+    @GetMapping("/sprints/{sprintId}/stories")
+    public List<StoryDto> fetchAllBySprint(@PathVariable UUID sprintId) {
+        return fetch.fetchAllBySprint(sprintId).stream().map(mapper::toDto).toList();
     }
 
     @PostMapping("/stages/{stageId}/stories")
@@ -89,6 +95,13 @@ public class StoryController {
     public StoryDto update(@PathVariable UUID projectId, @PathVariable UUID storyId,
             @RequestBody ChangeStoryStageDto story) {
         Story updated = updateStage.update(projectId, storyId, story.stageId());
+        return mapper.toDto(updated);
+    }
+
+    @PatchMapping("/projects/{projectId}/stories/{storyId}/sprint")
+    public StoryDto update(@PathVariable UUID projectId, @PathVariable UUID storyId,
+            @RequestBody ChangeStorySprintDto story) {
+        Story updated = updateStage.update(story.sprintId(), storyId);
         return mapper.toDto(updated);
     }
 

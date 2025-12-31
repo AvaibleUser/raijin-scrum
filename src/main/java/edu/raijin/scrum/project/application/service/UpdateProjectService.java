@@ -21,7 +21,7 @@ public class UpdateProjectService implements UpdateProjectUseCase {
 
     @Override
     @Transactional
-    public Project update(UUID projectId, Project update) {
+    public Project update(UUID projectId, Project update, UUID actorId) {
         Project project = updateProject.findById(projectId)
                 .orElseThrow(() -> new ValueNotFoundException("El proyecto no existe"));
 
@@ -29,7 +29,7 @@ public class UpdateProjectService implements UpdateProjectUseCase {
         project.checkValidRegistration();
         Project updated = updateProject.update(project);
 
-        eventPublisher.publishUpdatedProject(updated);
+        eventPublisher.publishUpdatedProject(updated, actorId, false);
         return updated;
     }
 }

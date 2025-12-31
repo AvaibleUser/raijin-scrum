@@ -20,7 +20,7 @@ public class DeleteProjectService implements DeleteProjectUseCase {
 
     @Override
     @Transactional
-    public void delete(UUID projectId) {
+    public void delete(UUID projectId, UUID actorId) {
         Project project = updateProject.findById(projectId).orElse(null);
         if (project == null) {
             return;
@@ -29,6 +29,6 @@ public class DeleteProjectService implements DeleteProjectUseCase {
         project.delete();
         updateProject.update(project);
 
-        eventPublisher.publishDeletedProject(project);
+        eventPublisher.publishDeletedProject(project, actorId);
     }
 }

@@ -8,5 +8,5 @@ import edu.raijin.scrum.project.domain.model.Project;
 @UseCase
 public interface CreateProjectUseCase {
 
-    UUID create(Project project);
+    UUID create(Project project, UUID actorId);
 }

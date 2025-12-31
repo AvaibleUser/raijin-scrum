@@ -20,13 +20,13 @@ public class CreateProjectService implements CreateProjectUseCase {
 
     @Override
     @Transactional
-    public UUID create(Project project) {
+    public UUID create(Project project, UUID actorId) {
         project.checkValidRegistration();
 
         UUID id = registerProject.create(project);
         project.updateId(id);
 
-        eventPublisher.publishCreatedProject(project);
+        eventPublisher.publishCreatedProject(project, actorId);
         return id;
     }
 }

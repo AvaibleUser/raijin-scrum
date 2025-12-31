@@ -21,19 +21,19 @@ public class DeleteStoryService implements DeleteStoryUseCase {
 
     @Override
     @Transactional
-    public void delete(Long stageId, UUID storyId) {
+    public void delete(Long stageId, UUID storyId, UUID actorId) {
         Story story = update.findByIdAndStageId(storyId, stageId)
                 .orElseThrow(() -> new ValueNotFoundException("La historia no se encuentra registrado"));
 
         story.delete();
         Story saved = update.update(story);
 
-        eventPublisher.publishDeletedStory(saved);
+        eventPublisher.publishDeletedStory(saved, actorId);
     }
 
     @Override
     @Transactional
-    public void delete(UUID projectId, UUID storyId) {
-        delete((Long) null, storyId);
+    public void delete(UUID projectId, UUID storyId, UUID actorId) {
+        delete((Long) null, storyId, actorId);
     }
 }

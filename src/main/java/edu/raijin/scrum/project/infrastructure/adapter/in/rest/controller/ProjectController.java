@@ -64,25 +64,25 @@ public class ProjectController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ProjectIdDto create(@RequestBody @Valid AddProjectDto project) {
-        UUID id = create.create(mapper.toDomain(project));
+    public ProjectIdDto create(@RequestBody @Valid AddProjectDto project, @CurrentUser UUID actorId) {
+        UUID id = create.create(mapper.toDomain(project), actorId);
         return new ProjectIdDto(id);
     }
 
     @PutMapping("/{id}")
-    public ProjectDto update(@PathVariable UUID id, @RequestBody AddProjectDto project) {
-        Project updated = update.update(id, mapper.toDomain(project));
+    public ProjectDto update(@PathVariable UUID id, @RequestBody AddProjectDto project, @CurrentUser UUID actorId) {
+        Project updated = update.update(id, mapper.toDomain(project), actorId);
         return mapper.toDto(updated);
     }
 
     @PatchMapping("/{id}/close")
-    public ProjectDto close(@PathVariable UUID id) {
-        Project closed = close.close(id);
+    public ProjectDto close(@PathVariable UUID id, @CurrentUser UUID actorId) {
+        Project closed = close.close(id, actorId);
         return mapper.toDto(closed);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) {
-        delete.delete(id);
+    public void delete(@PathVariable UUID id, @CurrentUser UUID actorId) {
+        delete.delete(id, actorId);
     }
 }

@@ -1,10 +1,12 @@
 package edu.raijin.scrum.story.domain.port.messaging;
 
+import java.util.UUID;
+
 import edu.raijin.commons.util.annotation.Port;
 import edu.raijin.scrum.story.domain.model.Story;
 
 @Port
 public interface UpdatedStoryPublisherPort {
 
-    void publishUpdatedStory(Story story);
+    void publishUpdatedStory(Story story, UUID actorId, boolean moved);
 }

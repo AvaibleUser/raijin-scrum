@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.raijin.commons.util.annotation.Adapter;
+import edu.raijin.commons.util.annotation.CurrentUser;
 import edu.raijin.scrum.story.domain.model.Story;
 import edu.raijin.scrum.story.domain.usecase.CreateStoryUseCase;
 import edu.raijin.scrum.story.domain.usecase.DeleteStoryUseCase;
@@ -60,60 +61,64 @@ public class StoryController {
 
     @PostMapping("/stages/{stageId}/stories")
     @ResponseStatus(CREATED)
-    public StoryDto create(@PathVariable Long stageId, @RequestBody @Valid AddStoryDto story) {
-        Story created = create.create(stageId, mapper.toDomain(story));
+    public StoryDto create(@PathVariable Long stageId, @RequestBody @Valid AddStoryDto story,
+            @CurrentUser UUID actorId) {
+        Story created = create.create(stageId, mapper.toDomain(story), actorId);
         return mapper.toDto(created);
     }
 
     @PostMapping("/projects/{projectId}/stories")
     @ResponseStatus(CREATED)
-    public StoryDto create(@PathVariable UUID projectId, @RequestBody @Valid AddStoryDto story) {
-        Story created = create.create(projectId, mapper.toDomain(story));
+    public StoryDto create(@PathVariable UUID projectId, @RequestBody @Valid AddStoryDto story,
+            @CurrentUser UUID actorId) {
+        Story created = create.create(projectId, mapper.toDomain(story), actorId);
         return mapper.toDto(created);
     }
 
     @PutMapping("/stages/{stageId}/stories/{storyId}")
-    public StoryDto update(@PathVariable Long stageId, @PathVariable UUID storyId, @RequestBody AddStoryDto story) {
-        Story updated = update.update(stageId, storyId, mapper.toDomain(story));
+    public StoryDto update(@PathVariable Long stageId, @PathVariable UUID storyId, @RequestBody AddStoryDto story,
+            @CurrentUser UUID actorId) {
+        Story updated = update.update(stageId, storyId, mapper.toDomain(story), actorId);
         return mapper.toDto(updated);
     }
 
     @PutMapping("/projects/{projectId}/stories/{storyId}")
-    public StoryDto update(@PathVariable UUID projectId, @PathVariable UUID storyId, @RequestBody AddStoryDto story) {
-        Story updated = update.update(projectId, storyId, mapper.toDomain(story));
+    public StoryDto update(@PathVariable UUID projectId, @PathVariable UUID storyId, @RequestBody AddStoryDto story,
+            @CurrentUser UUID actorId) {
+        Story updated = update.update(projectId, storyId, mapper.toDomain(story), actorId);
         return mapper.toDto(updated);
     }
 
     @PatchMapping("/stages/{stageId}/stories/{storyId}/stage")
     public StoryDto update(@PathVariable Long stageId, @PathVariable UUID storyId,
-            @RequestBody ChangeStoryStageDto story) {
-        Story updated = updateStage.update(stageId, storyId, story.stageId());
+            @RequestBody ChangeStoryStageDto story, @CurrentUser UUID actorId) {
+        Story updated = updateStage.update(stageId, storyId, story.stageId(), actorId);
         return mapper.toDto(updated);
     }
 
     @PatchMapping("/projects/{projectId}/stories/{storyId}/stage")
     public StoryDto update(@PathVariable UUID projectId, @PathVariable UUID storyId,
-            @RequestBody ChangeStoryStageDto story) {
-        Story updated = updateStage.update(projectId, storyId, story.stageId());
+            @RequestBody ChangeStoryStageDto story, @CurrentUser UUID actorId) {
+        Story updated = updateStage.update(projectId, storyId, story.stageId(), actorId);
         return mapper.toDto(updated);
     }
 
     @PatchMapping("/projects/{projectId}/stories/{storyId}/sprint")
     public StoryDto update(@PathVariable UUID projectId, @PathVariable UUID storyId,
-            @RequestBody ChangeStorySprintDto story) {
-        Story updated = updateStage.update(story.sprintId(), storyId);
+            @RequestBody ChangeStorySprintDto story, @CurrentUser UUID actorId) {
+        Story updated = updateStage.update(story.sprintId(), storyId, actorId);
         return mapper.toDto(updated);
     }
 
     @DeleteMapping("/stages/{stageId}/stories/{storyId}")
     @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable Long stageId, @PathVariable UUID storyId) {
-        delete.delete(stageId, storyId);
+    public void delete(@PathVariable Long stageId, @PathVariable UUID storyId, @CurrentUser UUID actorId) {
+        delete.delete(stageId, storyId, actorId);
     }
 
     @DeleteMapping("/projects/{projectId}/stories/{storyId}")
     @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable UUID projectId, @PathVariable UUID storyId) {
-        delete.delete(projectId, storyId);
+    public void delete(@PathVariable UUID projectId, @PathVariable UUID storyId, @CurrentUser UUID actorId) {
+        delete.delete(projectId, storyId, actorId);
     }
 }

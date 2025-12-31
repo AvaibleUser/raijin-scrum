@@ -8,5 +8,5 @@ import edu.raijin.scrum.sprint.domain.model.Sprint;
 @UseCase
 public interface CreateSprintUseCase {
 
-    Sprint create(UUID projectId, Sprint sprint);
+    Sprint create(UUID projectId, Sprint sprint, UUID actorId);
 }

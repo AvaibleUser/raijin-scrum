@@ -24,7 +24,7 @@ public class UpdateStoryStageService implements UpdateStoryStageUseCase {
 
     @Override
     @Transactional
-    public Story update(Long stageId, UUID storyId, Long newStageId) {
+    public Story update(Long stageId, UUID storyId, Long newStageId, UUID actorId) {
         Story updated = update.findByIdAndStageId(storyId, stageId)
                 .orElseThrow(() -> new ValueNotFoundException("La historia no se encuentra registrada"));
 
@@ -33,22 +33,22 @@ public class UpdateStoryStageService implements UpdateStoryStageUseCase {
 
         Story saved = update.update(updated);
 
-        eventPublisher.publishUpdatedStory(saved);
+        eventPublisher.publishUpdatedStory(saved, actorId, true);
         return saved;
     }
 
     @Override
     @Transactional
-    public Story update(UUID projectId, UUID storyId, Long newStageId) {
-        return update((Long) null, storyId, newStageId);
+    public Story update(UUID projectId, UUID storyId, Long newStageId, UUID actorId) {
+        return update((Long) null, storyId, newStageId, actorId);
     }
 
     @Override
     @Transactional
-    public Story update(UUID sprintId, UUID storyId) {
+    public Story update(UUID sprintId, UUID storyId, UUID actorId) {
         Stage stage = findStage.findDefaultBySprint(sprintId)
                 .orElseThrow(() -> new ValueNotFoundException("La columna no se encuentra registrada"));
 
-        return update((Long) null, storyId, stage.getId());
+        return update((Long) null, storyId, stage.getId(), actorId);
     }
 }

@@ -21,7 +21,7 @@ public class CreateStoryService implements CreateStoryUseCase {
 
     @Override
     @Transactional
-    public Story create(Long stageId, Story story) {
+    public Story create(Long stageId, Story story, UUID actorId) {
         if (!register.existsStage(stageId)) {
             throw new ValueNotFoundException("La columna no se encuentra registrada");
         }
@@ -35,13 +35,13 @@ public class CreateStoryService implements CreateStoryUseCase {
 
         Story saved = register.create(stageId, story);
 
-        eventPublisher.publishCreatedStory(saved);
+        eventPublisher.publishCreatedStory(saved, actorId);
         return saved;
     }
 
     @Override
     @Transactional
-    public Story create(UUID projectId, Story story) {
+    public Story create(UUID projectId, Story story, UUID actorId) {
         if (!register.existsProject(projectId)) {
             throw new ValueNotFoundException("El proyecto no se encuentra registrado");
         }
@@ -55,7 +55,7 @@ public class CreateStoryService implements CreateStoryUseCase {
 
         Story saved = register.create(projectId, story);
 
-        eventPublisher.publishCreatedStory(saved);
+        eventPublisher.publishCreatedStory(saved, actorId);
         return saved;
     }
 }

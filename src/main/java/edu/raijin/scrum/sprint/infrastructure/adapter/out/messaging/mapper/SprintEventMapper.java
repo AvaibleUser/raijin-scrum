@@ -3,8 +3,10 @@ package edu.raijin.scrum.sprint.infrastructure.adapter.out.messaging.mapper;
 import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import edu.raijin.commons.infrastructure.adapter.messaging.event.scrum.SprintEvent;
+import edu.raijin.commons.infrastructure.adapter.messaging.event.shared.Audit;
 import edu.raijin.commons.util.annotation.Adapter;
 import edu.raijin.scrum.sprint.domain.model.Sprint;
 
@@ -12,5 +14,7 @@ import edu.raijin.scrum.sprint.domain.model.Sprint;
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = IGNORE)
 public interface SprintEventMapper {
 
-    SprintEvent toEvent(Sprint Sprint);
+    @Mapping(target = "description", source = "sprint.description")
+    @Mapping(target = "audit", source = "audit")
+    SprintEvent toEvent(Sprint sprint, Audit audit);
 }

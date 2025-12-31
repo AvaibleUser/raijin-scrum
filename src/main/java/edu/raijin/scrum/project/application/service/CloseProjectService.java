@@ -22,7 +22,7 @@ public class CloseProjectService implements CloseProjectUseCase {
 
     @Override
     @Transactional
-    public Project close(UUID projectId) {
+    public Project close(UUID projectId, UUID actorId) {
         Project project = updateProject.findById(projectId)
                 .orElseThrow(() -> new ValueNotFoundException("El proyecto no existe"));
 
@@ -32,7 +32,7 @@ public class CloseProjectService implements CloseProjectUseCase {
         project.close();
         Project updated = updateProject.update(project);
 
-        eventPublisher.publishUpdatedProject(updated);
+        eventPublisher.publishUpdatedProject(updated, actorId, true);
 
         return project;
     }

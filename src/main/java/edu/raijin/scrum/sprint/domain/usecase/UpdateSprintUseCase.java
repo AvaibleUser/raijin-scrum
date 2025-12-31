@@ -8,5 +8,5 @@ import edu.raijin.scrum.sprint.domain.model.Sprint;
 @UseCase
 public interface UpdateSprintUseCase {
 
-    Sprint update(UUID projectId, UUID sprintId, Sprint sprint);
+    Sprint update(UUID projectId, UUID sprintId, Sprint sprint, UUID actorId);
 }

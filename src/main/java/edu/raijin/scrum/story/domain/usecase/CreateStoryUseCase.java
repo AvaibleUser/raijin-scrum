@@ -8,7 +8,7 @@ import edu.raijin.scrum.story.domain.model.Story;
 @UseCase
 public interface CreateStoryUseCase {
 
-    Story create(Long stageId, Story story);
+    Story create(Long stageId, Story story, UUID actorId);
 
-    Story create(UUID projectId, Story story);
+    Story create(UUID projectId, Story story, UUID actorId);
 }

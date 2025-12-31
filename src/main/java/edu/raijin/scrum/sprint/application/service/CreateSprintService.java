@@ -56,7 +56,7 @@ public class CreateSprintService implements CreateSprintUseCase {
 
     @Override
     @Transactional
-    public Sprint create(UUID projectId, Sprint sprint) {
+    public Sprint create(UUID projectId, Sprint sprint, UUID actorId) {
         if (!registerSprint.existsProject(projectId)) {
             throw new ValueNotFoundException("El proyecto no se encuentra registrado");
         }
@@ -72,7 +72,7 @@ public class CreateSprintService implements CreateSprintUseCase {
         createStage.create(id, getInDevelopmentStage(id));
         createStage.create(id, getDoneStage(id));
 
-        eventPublisher.publishCreatedSprint(created);
+        eventPublisher.publishCreatedSprint(created, actorId);
         return created;
     }
 }
